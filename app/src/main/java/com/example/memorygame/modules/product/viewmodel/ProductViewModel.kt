@@ -5,12 +5,21 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.memory_game.modules.product.model.Product
+import com.example.memory_game.modules.product.model.datasource.ProductDataSourceRemote
 import com.example.memory_game.modules.product.model.repository.ProductRepository
+import com.example.memorygame.data.ProductApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import org.koin.core.KoinComponent
+import org.koin.core.inject
 
-class ProductViewModel(private val repository: ProductRepository) : ViewModel() {
+class ProductViewModel() : ViewModel(), KoinComponent {
+
+    val productApi: ProductApi? by inject()
+
+    private val repository by lazy {
+        ProductRepository(ProductDataSourceRemote(productApi?.getProductService()))
+    }
 
     val products = MutableLiveData<List<Product>>().apply { value = emptyList() }
 
@@ -18,7 +27,6 @@ class ProductViewModel(private val repository: ProductRepository) : ViewModel() 
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 products.postValue(repository.loadAll())
-                Log.e("Success", "Success")
             } catch (ex: Exception) {
                 Log.e("Error", ex.message)
             }
