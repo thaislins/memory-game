@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.example.memory_game.modules.card.model.Card
 import com.example.memory_game.modules.product.viewmodel.ProductViewModel
 import com.example.memorygame.R
+import org.koin.android.ext.android.inject
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -13,9 +14,7 @@ class GameActivity : AppCompatActivity() {
 
     var cards = mutableListOf<Card>()
 
-    val viewModel by lazy {
-        ViewModelProviders.of(this).get(ProductViewModel::class.java)
-    }
+    val viewModel: ProductViewModel by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

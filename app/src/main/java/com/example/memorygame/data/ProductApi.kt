@@ -7,6 +7,10 @@ import retrofit2.converter.jackson.JacksonConverterFactory
 
 class ProductApi {
 
+    /**
+     * Creates a retrofit object to be used for a request
+     *
+     */
     fun getProductService(): ProductService {
         val retrofit = Retrofit.Builder()
             .baseUrl("https://shopicruit.myshopify.com/")
@@ -17,6 +21,10 @@ class ProductApi {
         return retrofit.create(ProductService::class.java)
     }
 
+    /**
+     * Creates logging object that logs all details about related request
+     *
+     */
     private fun createLoggingInterceptor(): OkHttpClient {
         val interceptor = HttpLoggingInterceptor()
         interceptor.level = HttpLoggingInterceptor.Level.BODY

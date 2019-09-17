@@ -23,6 +23,11 @@ class ProductViewModel() : ViewModel(), KoinComponent {
 
     val products = MutableLiveData<List<Product>>().apply { value = emptyList() }
 
+    /**
+     * This method launches a coroutine to allow an
+     * API request
+     *
+     */
     fun loadProducts() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
