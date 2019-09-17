@@ -11,6 +11,7 @@ class ProductApi {
         val retrofit = Retrofit.Builder()
             .baseUrl("https://shopicruit.myshopify.com/")
             .addConverterFactory(JacksonConverterFactory.create())
+            .client(createLoggingInterceptor())
             .build()
 
         return retrofit.create(ProductService::class.java)
