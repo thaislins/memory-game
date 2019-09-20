@@ -20,16 +20,16 @@ class GameActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         viewModel.loadProducts()
-        createCards(10)
+        createCards(2, 2)
         val adapter = CardAdapter(this, R.layout.item_card, cards)
         gridView.adapter = adapter
     }
 
-    fun createCards(pairs: Int) {
+    fun createCards(pairs: Int, amountMatches: Int) {
         for (i in 1..pairs) {
             val card = Card()
-            cards.addAll(Arrays.asList(card, card))
+            cards.addAll(MutableList(amountMatches) {card})
         }
-        var newCards = cards.shuffled()
+        cards = cards.shuffled() as MutableList<Card>
     }
 }
