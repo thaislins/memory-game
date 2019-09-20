@@ -6,13 +6,25 @@
     android:layout_height="match_parent"
     tools:context="com.example.memory_game.GameActivity">
 
-    <ImageButton
+    <GridView
+        android:id="@+id/gridView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:horizontalSpacing="@dimen/elementMargin"
+        android:numColumns="4"
+        android:verticalSpacing="@dimen/elementMargin"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!--<ImageButton
         android:layout_width="100dp"
         android:layout_height="140dp"
-        android:background="@drawable/card"
+        android:background="@drawable/card_back"
         android:src="@mipmap/ic_card"
         android:elevation="5dp"
         tools:layout_editor_absoluteX="108dp"
-        tools:layout_editor_absoluteY="118dp" />
+        tools:layout_editor_absoluteY="118dp" />-->
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

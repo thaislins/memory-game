@@ -1,9 +1,41 @@
 
 <
 build.gradle,f/0/f07866736216be0ee2aba49e392191aeae700a35
-s
-Capp/src/main/java/com/example/memorygame/modules/card/model/Card.kt,5/4/54c11e41fba17602a5191f5d06782209d7c17c51
-h
-8app/src/main/java/com/example/memorygame/MainActivity.kt,b/c/bcad24835771d72b3d45e28de72c948a42b01743
 @
 app/build.gradle,f/4/f4a01d6a4fcb971362ec00a83903fd3902f52164
+P
+ app/src/main/AndroidManifest.xml,8/c/8c55c3ccc257e5907959013f99656e4c8ec3903e
+9
+	README.md,8/e/8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
+Ž
+^app/src/main/java/com/example/memorygame/modules/product/model/datasource/ProductDataSource.kt,e/6/e641b4cc7191f2536e122795fa941a42e995b237
+s
+Capp/src/main/java/com/example/memorygame/modules/game/model/Card.kt,8/a/8a088467117aac1e64cdeaf6c56760d1d665d64d
+y
+Iapp/src/main/java/com/example/memorygame/modules/product/model/Product.kt,5/8/588bb53069263589f004d5fc1fdb013efe90aa9c
+w
+Gapp/src/main/java/com/example/memorygame/modules/product/model/Image.kt,d/a/da279a44b41f1f5a01a26622cbfb30c4e57b08c4
+ˆ
+Xapp/src/main/java/com/example/memorygame/modules/game/model/repository/CardRepository.kt,3/5/35fc2a5ae1ba93a70c99fb4f8ddf1b9b1fe974bd
+o
+?app/src/main/java/com/example/memorygame/data/ProductService.kt,e/6/e6f08248d7dfc0b2042b8f2addd3f2c69a8f7112
+ˆ
+Xapp/src/main/java/com/example/memorygame/modules/game/model/datasource/CardDataSource.kt,e/3/e393387e7d99494d509a6affe391e1b44a1e7f08
+k
+;app/src/main/java/com/example/memorygame/data/ProductApi.kt,c/f/cf76c9a0a3b87d9b653c948f106ab63c94935efa
+}
+Mapp/src/main/java/com/example/memorygame/application/MemoryGameApplication.kt,4/e/4e94ebe22955897f7e02d75499df3980748999e7
+†
+Vapp/src/main/java/com/example/memorygame/modules/product/viewmodel/ProductViewModel.kt,0/0/007ec396bed045708ead6c3cae4b6ada7c1e0629
+Ž
+^app/src/main/java/com/example/memorygame/modules/product/model/repository/ProductRepository.kt,7/2/725e786bdb592a834693577f56c66c60a1813d6f
+y
+Iapp/src/main/java/com/example/memorygame/modules/product/model/Shopify.kt,e/2/e2b8a2aa3fe3ff6b33ba7c7aab9c205cb1ca0223
+”
+dapp/src/main/java/com/example/memorygame/modules/product/model/datasource/ProductDataSourceRemote.kt,a/d/ad4876f5cc9cbfd4b19ec4820a8cf3876b8df770
+z
+Japp/src/main/java/com/example/memorygame/modules/game/view/GameActivity.kt,5/0/503ef81ebd3f70fcf3f625e502cf0b461dcf2572
+|
+Lapp/src/main/java/com/example/memorygame/modules/game/view/CardViewHolder.kt,7/8/782b1e361cc9c735d46e9339f2dc4fef0e419764
+‚
+Rapp/src/main/java/com/example/memorygame/modules/game/model/adapter/CardAdapter.kt,9/b/9b2d2f0a0e70ca186ad0225bf6df0899a824da73
