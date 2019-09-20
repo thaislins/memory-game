@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ImageView
-import android.widget.TextView
 import com.example.memory_game.modules.card.model.Card
 import com.example.memorygame.R
 

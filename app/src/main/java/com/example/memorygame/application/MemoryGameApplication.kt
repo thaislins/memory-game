@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import com.example.memory_game.modules.product.viewmodel.ProductViewModel
 import com.example.memorygame.data.ProductApi
+import com.example.memorygame.modules.game.viewmodel.GameViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -13,7 +14,8 @@ class MemoryGameApplication : Application() {
 
     val listofModules = module {
         single { ProductApi() } // single instance of ProductApi
-        single { ProductViewModel() } // single instance of ProductViewModel
+        single { ProductViewModel() }
+        single { GameViewModel() }
     }
 
     companion object {

@@ -6,6 +6,14 @@
     android:layout_height="match_parent"
     tools:context="com.example.memory_game.GameActivity">
 
+    <!--<data>
+        <variable
+            name="productViewModel"
+            type="br.ufrn.sinfo.mesavirtual.modules.institution.viewmodel.InstitutionViewModel" />
+
+        <import type="android.view.View" />
+    </data>-->
+
     <GridView
         android:id="@+id/gridView"
         android:layout_width="match_parent"
