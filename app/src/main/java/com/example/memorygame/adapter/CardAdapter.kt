@@ -1,4 +1,4 @@
-package com.example.memorygame.modules.game.model.adapter
+package com.example.memorygame.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -13,7 +13,7 @@ class CardAdapter(
     context: Context,
     private val resource: Int,
     private val cardList: MutableList<Card>?
-) : ArrayAdapter<CardAdapter.CardHolder>(context, resource) {
+) : ArrayAdapter<CardAdapter.CardHolder>(context, resource), AdapterItemsContract {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         var convertView = convertView
@@ -29,6 +29,11 @@ class CardAdapter(
         }
 
         return convertView
+    }
+
+    override fun replaceItems(list: List<*>) {
+        cardList?.addAll(list as List<Card>)
+        notifyDataSetChanged()
     }
 
     override fun getCount(): Int {
