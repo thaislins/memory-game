@@ -13,9 +13,8 @@ import org.koin.dsl.module
 class MemoryGameApplication : Application() {
 
     val listofModules = module {
-        single { ProductApi() } // single instance of ProductApi
-        single { ProductViewModel() }
-        single { GameViewModel() }
+        single { ProductApi() }
+        factory { ProductViewModel() }
     }
 
     companion object {

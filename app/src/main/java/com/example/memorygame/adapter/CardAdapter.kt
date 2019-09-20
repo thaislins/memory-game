@@ -28,6 +28,7 @@ class CardAdapter(
             holder = convertView.tag as CardHolder
         }
 
+        //holder.cardImagePhotoPath.set
         return convertView
     }
 

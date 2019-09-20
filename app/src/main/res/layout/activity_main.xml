@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     tools:context="com.example.memory_game.GameActivity">
 
-    <!--<data>
+    <data>
+
         <variable
-            name="productViewModel"
-            type="br.ufrn.sinfo.mesavirtual.modules.institution.viewmodel.InstitutionViewModel" />
+            name="viewModel"
+            type="com.example.memorygame.modules.game.viewmodel.GameViewModel" />
 
         <import type="android.view.View" />
-    </data>-->
+    </data>
 
     <GridView
         android:id="@+id/gridView"
@@ -22,17 +21,5 @@
         android:horizontalSpacing="@dimen/elementMargin"
         android:numColumns="4"
         android:verticalSpacing="@dimen/elementMargin"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <!--<ImageButton
-        android:layout_width="100dp"
-        android:layout_height="140dp"
-        android:background="@drawable/card_back"
-        android:src="@mipmap/ic_card"
-        android:elevation="5dp"
-        tools:layout_editor_absoluteX="108dp"
-        tools:layout_editor_absoluteY="118dp" />-->
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+        app:cards="@{viewModel.cards}" />
+</layout>

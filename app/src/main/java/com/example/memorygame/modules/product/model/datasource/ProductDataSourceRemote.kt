@@ -9,11 +9,11 @@ class ProductDataSourceRemote(private val productService: ProductService?) : Pro
 
     override suspend fun loadAll(): List<Product>? {
         try {
-            val call = productService?.getProducts("1", ACCESS_TOKEN)
-            val response = call?.execute()
-            if (response?.isSuccessful!!) {
-                Log.d("Response", response.body()?.products?.get(0)?.image?.src.toString())
-                return response.body()?.products
+            val response = productService?.getProducts("1", ACCESS_TOKEN)
+
+            if (response != null) {
+                Log.d("RESPONSE", "IT WORKs")
+                return response.products
             } else {
                 Log.e("Error", "Error")
                 return null
