@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.example.memory_game.modules.card.model.Card
@@ -14,6 +15,7 @@ import com.example.memorygame.adapter.CardAdapter
 import com.example.memorygame.databinding.FragmentGameBinding
 import com.example.memorygame.modules.game.viewmodel.GameViewModel
 import java.util.*
+
 
 class GameFragment : Fragment() {
 
@@ -39,5 +41,19 @@ class GameFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val products: ArrayList<Product>? = arguments?.getParcelableArrayList("key_product_list")
         binding.viewModel?.createCards(2, 2, products)
+        setClickListener()
+    }
+
+    fun setClickListener() {
+        binding.gridView.setOnItemClickListener(AdapterView.OnItemClickListener { parent, view, position, id ->
+            // Get the GridView selected/clicked item text
+            val adapter = binding.gridView.adapter as CardAdapter
+            val cardList = binding.viewModel?.cards?.value as MutableList<Card>
+
+            val selectedCard = cardList.get(position)
+            selectedCard.isFaceUp = true
+            cardList[position] = selectedCard
+            adapter.notifyDataSetChanged()
+        })
     }
 }

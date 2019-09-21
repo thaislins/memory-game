@@ -2,11 +2,13 @@ package com.example.memory_game.modules.card.model
 
 import com.example.memory_game.modules.product.model.Image
 
-class Card {
-    var id: Int
-    var isFaceUp: Boolean = false
-    var isMatched: Boolean = false
-    var image: Image? = null
+data class Card(
+    var id: Int,
+    var isFaceUp: Boolean,
+    var isMatched: Boolean,
+    var image: Image?
+) {
+    constructor() : this(getUniqueId(), false, false, null)
 
     companion object {
         var identifierFactory: Int = 0
@@ -16,9 +18,4 @@ class Card {
             return identifierFactory
         }
     }
-
-    init {
-        id = getUniqueId()
-    }
-
 }

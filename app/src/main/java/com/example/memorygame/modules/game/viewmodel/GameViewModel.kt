@@ -30,7 +30,7 @@ class GameViewModel : ViewModel(), KoinComponent {
 
     fun createCards(pairs: Int, amountMatches: Int, products: List<Product>?) {
         var images = getImageList(products)
-        images = images.shuffled().subList(0, amountMatches)
+        images = images.shuffled().subList(0, pairs)
         cards.value = repository.showCards(pairs, amountMatches, images)
     }
 }
