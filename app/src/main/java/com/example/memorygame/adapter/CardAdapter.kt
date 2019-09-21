@@ -11,9 +11,7 @@ import com.example.memory_game.modules.card.model.Card
 import com.example.memorygame.R
 
 class CardAdapter(
-    context: Context,
-    private val resource: Int,
-    private val cardList: MutableList<Card>?
+    context: Context, private val resource: Int, private val cardList: MutableList<Card>?
 ) : ArrayAdapter<CardAdapter.CardHolder>(context, resource), AdapterItemsContract {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {

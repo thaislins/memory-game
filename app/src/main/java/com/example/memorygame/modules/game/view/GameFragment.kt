@@ -16,18 +16,17 @@ import com.example.memorygame.databinding.FragmentGameBinding
 import com.example.memorygame.modules.game.viewmodel.GameViewModel
 import java.util.*
 
-
 class GameFragment : Fragment() {
 
     var cards = mutableListOf<Card>()
+    var posOnlyFaceUpCard: Int = -1
     private lateinit var binding: FragmentGameBinding
     val gameViewModel: GameViewModel? by lazy {
         ViewModelProviders.of(this).get(GameViewModel::class.java)
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         binding = FragmentGameBinding.inflate(inflater, container, false)
         binding.viewModel = gameViewModel
@@ -44,16 +43,23 @@ class GameFragment : Fragment() {
         setClickListener()
     }
 
-    fun setClickListener() {
+    private fun setClickListener() {
         binding.gridView.setOnItemClickListener(AdapterView.OnItemClickListener { parent, view, position, id ->
             // Get the GridView selected/clicked item text
             val adapter = binding.gridView.adapter as CardAdapter
-            val cardList = binding.viewModel?.cards?.value as MutableList<Card>
 
-            val selectedCard = cardList.get(position)
-            selectedCard.isFaceUp = true
-            cardList[position] = selectedCard
+            chooseCard(position)
             adapter.notifyDataSetChanged()
         })
+    }
+
+
+    private fun chooseCard(position: Int) {
+        // no cards or 2 cards are facing up
+        for (i in 0 until cards.size) {
+            cards[i].isFaceUp = false
+        }
+        cards[position].isFaceUp = true
+        posOnlyFaceUpCard = position
     }
 }
