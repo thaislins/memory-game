@@ -1,8 +1,8 @@
 package com.example.memorygame.modules.game.view
 
 
-import android.animation.AnimatorInflater
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,14 +15,17 @@ import com.example.memorygame.R
 import com.example.memorygame.adapter.CardAdapter
 import com.example.memorygame.databinding.FragmentGameBinding
 import com.example.memorygame.modules.game.viewmodel.GameViewModel
+import kotlinx.android.synthetic.main.fragment_game.view.*
+import kotlinx.android.synthetic.main.item_card.view.*
 import java.util.*
 
 class GameFragment : Fragment() {
 
-    var cards = mutableListOf<Card>()
-    var posOnlyFaceUpCard: Int = -1
+    private var cards = mutableListOf<Card>()
+    private var posFirstCardFaceUp: Int = -1
+    private var posSecondCardFaceUp: Int = -1
     private lateinit var binding: FragmentGameBinding
-    val gameViewModel: GameViewModel? by lazy {
+    private val gameViewModel: GameViewModel? by lazy {
         ViewModelProviders.of(this).get(GameViewModel::class.java)
     }
 
@@ -41,6 +44,7 @@ class GameFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val products: ArrayList<Product>? = arguments?.getParcelableArrayList("key_product_list")
         binding.viewModel?.createCards(8, 2, products)
+        binding.viewModel?.createCards(10, 2, products)
         setClickListener()
     }
 
@@ -49,30 +53,37 @@ class GameFragment : Fragment() {
             // Get the GridView selected/clicked item text
             val adapter = binding.gridView.adapter as CardAdapter
 
-            chooseCard(position)
-            adapter.notifyDataSetChanged()
+            if (posSecondCardFaceUp == -1) chooseCard(position, adapter)
         })
     }
 
-    private fun chooseCard(position: Int) {
-        if (!cards[position].isMatched && posOnlyFaceUpCard != -1) {
-            // checks if cards match
-            val matchIndex = posOnlyFaceUpCard
-            if (matchIndex != position) {
-                if (cards[position].id == cards[matchIndex].id) {
-                    cards[position].isMatched = true
-                    cards[matchIndex].isMatched = true
-                }
-                cards[position].isFaceUp = true
-                posOnlyFaceUpCard = -1
-            }
+    private fun chooseCard(position: Int, adapter: CardAdapter) {
+        if (!cards[position].isMatched && posFirstCardFaceUp != -1) {
+            posSecondCardFaceUp = position
+            cards[posSecondCardFaceUp].isFaceUp = true
+            adapter.notifyDataSetChanged()
+
+            Handler().postDelayed({
+                checkIfCardsMatch(adapter)
+            }, 900)
         } else {
-            // no cards or 2 cards are facing up
-            for (i in 0 until cards.size) {
-                cards[i].isFaceUp = false
-            }
-            cards[position].isFaceUp = true
-            posOnlyFaceUpCard = position
+            posFirstCardFaceUp = position
+            cards[posFirstCardFaceUp].isFaceUp = true
+            adapter.notifyDataSetChanged()
         }
+    }
+
+    private fun checkIfCardsMatch(adapter: CardAdapter) {
+        if (cards[posFirstCardFaceUp].id == cards[posSecondCardFaceUp].id) {
+            cards[posFirstCardFaceUp].isMatched = true
+            cards[posSecondCardFaceUp].isMatched = true
+        }
+
+        cards[posFirstCardFaceUp].isFaceUp = false
+        cards[posSecondCardFaceUp].isFaceUp = false
+
+        posFirstCardFaceUp = -1
+        posSecondCardFaceUp = -1
+        adapter.notifyDataSetChanged()
     }
 }
