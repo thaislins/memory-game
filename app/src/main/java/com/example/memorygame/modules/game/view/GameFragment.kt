@@ -46,7 +46,7 @@ class GameFragment : Fragment() {
         binding.gridView.setOnItemClickListener(AdapterView.OnItemClickListener { parent, view, position, id ->
             // Get the GridView selected/clicked item text
             val adapter = binding.gridView.adapter as CardAdapter
-            binding.viewModel?.chooseCard(position, adapter)
+            binding.viewModel?.chooseCard(position)
 
             gameViewModel?.updateLayout?.observe(this, Observer {
                 if (it) adapter.notifyDataSetChanged()

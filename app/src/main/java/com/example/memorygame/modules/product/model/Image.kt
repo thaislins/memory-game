@@ -7,7 +7,7 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 @JsonIgnoreProperties(ignoreUnknown = true)
 class Image : Parcelable {
-    var id: String? = null
-    var product_id: String? = null
-    var src: String? = null
+    @Transient var id: String? = null
+    @Transient var product_id: String? = null
+    @Transient var src: String? = null
 }
