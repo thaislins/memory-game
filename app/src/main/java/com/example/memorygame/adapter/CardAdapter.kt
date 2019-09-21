@@ -1,5 +1,6 @@
 package com.example.memorygame.adapter
 
+import android.animation.AnimatorInflater
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -14,11 +15,12 @@ class CardAdapter(
     context: Context, private val resource: Int, private val cardList: MutableList<Card>?
 ) : ArrayAdapter<CardAdapter.CardHolder>(context, resource), AdapterItemsContract {
 
+    lateinit var holder: CardHolder
+    var cardClickedPosition = -1
+
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-        val card = cardList?.get(position)
         var convView = convertView
 
-        val holder: CardHolder
         if (convertView == null) {
             convView = LayoutInflater.from(context).inflate(resource, null)
             holder = CardHolder()
@@ -28,11 +30,12 @@ class CardAdapter(
             holder = convertView.tag as CardHolder
         }
 
-        checksCard(card, holder)
+        checksCard(position)
         return convView!!
     }
 
-    private fun checksCard(card: Card?, holder: CardHolder) {
+    private fun checksCard(position: Int) {
+        val card = cardList?.get(position)
         // Checks if card is face up or down to define its content
         if (card?.isMatched!!) {
             hideCard(card, holder)
@@ -43,6 +46,12 @@ class CardAdapter(
                 showBack(card, holder)
             }
         }
+    }
+
+    private fun flipAnimation(res: Int) {
+//        val flip = AnimatorInflater.loadAnimator(context, res)
+//        flip.setTarget(holder.cardImagePhotoPath)
+//        flip.start()
     }
 
     private fun hideCard(card: Card, holder: CardHolder) {

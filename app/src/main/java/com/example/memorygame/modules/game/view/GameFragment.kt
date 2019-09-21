@@ -1,6 +1,7 @@
 package com.example.memorygame.modules.game.view
 
 
+import android.animation.AnimatorInflater
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -39,7 +40,7 @@ class GameFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val products: ArrayList<Product>? = arguments?.getParcelableArrayList("key_product_list")
-        binding.viewModel?.createCards(2, 2, products)
+        binding.viewModel?.createCards(8, 2, products)
         setClickListener()
     }
 
@@ -52,7 +53,6 @@ class GameFragment : Fragment() {
             adapter.notifyDataSetChanged()
         })
     }
-
 
     private fun chooseCard(position: Int) {
         if (!cards[position].isMatched && posOnlyFaceUpCard != -1) {
