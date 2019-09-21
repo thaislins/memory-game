@@ -12,7 +12,6 @@ class ProductDataSourceRemote(private val productService: ProductService?) : Pro
             val response = productService?.getProducts("1", ACCESS_TOKEN)
 
             if (response != null) {
-                Log.d("RESPONSE", "IT WORKs")
                 return response.products
             } else {
                 Log.e("Error", "Error")

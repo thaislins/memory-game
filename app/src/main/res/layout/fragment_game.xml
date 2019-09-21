@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".modules.game.view.GameFragment">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.example.memorygame.modules.game.viewmodel.GameViewModel" />
+
+        <import type="android.view.View" />
+    </data>
+
+    <GridView
+        android:id="@+id/gridView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:horizontalSpacing="@dimen/elementMargin"
+        android:numColumns="4"
+        android:verticalSpacing="@dimen/elementMargin"
+        app:cards="@{viewModel.cards}" />
+
+</layout>

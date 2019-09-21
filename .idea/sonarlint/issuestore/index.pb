@@ -29,8 +29,6 @@ y
 Iapp/src/main/java/com/example/memorygame/modules/product/model/Shopify.kt,e/2/e2b8a2aa3fe3ff6b33ba7c7aab9c205cb1ca0223
 ”
 dapp/src/main/java/com/example/memorygame/modules/product/model/datasource/ProductDataSourceRemote.kt,a/d/ad4876f5cc9cbfd4b19ec4820a8cf3876b8df770
-z
-Japp/src/main/java/com/example/memorygame/modules/game/view/GameActivity.kt,5/0/503ef81ebd3f70fcf3f625e502cf0b461dcf2572
 ‹
 [app/src/main/java/com/example/memorygame/modules/game/model/datasource/GameDataSourceImp.kt,0/f/0f4b4689b01426eeb9225ec63fa9f7afc778afa0
 ˆ
@@ -45,3 +43,11 @@ o
 ?app/src/main/java/com/example/memorygame/adapter/CardAdapter.kt,7/d/7dbe4372ae1fcf4226e365d73c5c3e5a047127c8
 s
 Capp/src/main/java/com/example/memorygame/adapter/BindingAdapters.kt,8/1/81b3f7fc4b80f4d6ae283987b42d381bc4be6d61
+}
+Mapp/src/main/java/com/example/memorygame/application/MemoryGameGlideModule.kt,f/e/fe132fbdd0f31d111949212e2c6a883cdcf761c2
+p
+@app/src/main/java/com/example/memorygame/modules/MainActivity.kt,c/2/c2ff430bcffd73da759b1afc850cfc20387defb7
+z
+Japp/src/main/java/com/example/memorygame/modules/game/view/GameFragment.kt,c/0/c0e007e040003cb72defa15f68e24d3617cf9e52
+}
+Mapp/src/main/java/com/example/memorygame/modules/product/view/MenuFragment.kt,4/9/49eb28f22cf87fcf59bb8416745c9928a950a5c5

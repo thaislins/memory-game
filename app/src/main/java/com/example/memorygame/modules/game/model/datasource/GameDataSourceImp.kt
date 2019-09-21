@@ -10,7 +10,7 @@ class GameDataSourceImp : GameDataSource {
 
         for (i in 1..pairs) {
             val card = Card()
-            card.image = images[i]
+            card.image = images[i - 1]
             cards.addAll(MutableList(amountMatches) { card })
         }
         return cards.shuffled() as MutableList<Card>
