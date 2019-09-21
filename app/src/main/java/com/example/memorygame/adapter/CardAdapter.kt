@@ -34,20 +34,28 @@ class CardAdapter(
 
     private fun checksCard(card: Card?, holder: CardHolder) {
         // Checks if card is face up or down to define its content
-        if (card?.isFaceUp!!) {
-            showCard(card, holder)
-        } else {
+        if (card?.isMatched!!) {
             hideCard(card, holder)
+        } else {
+            if (card.isFaceUp) {
+                showFront(card, holder)
+            } else {
+                showBack(card, holder)
+            }
         }
     }
 
-    private fun hideCard(card: Card, holder: CardAdapter.CardHolder) {
+    private fun hideCard(card: Card, holder: CardHolder) {
+        holder.cardImagePhotoPath?.visibility = View.INVISIBLE
+    }
+
+    private fun showBack(card: Card, holder: CardHolder) {
         holder.cardImagePhotoPath?.setImageDrawable(context.resources.getDrawable((R.drawable.ic_card_back)))
         holder.cardImagePhotoPath?.background =
             context.resources.getDrawable((R.drawable.card_back))
     }
 
-    fun showCard(card: Card?, holder: CardHolder) {
+    fun showFront(card: Card?, holder: CardHolder) {
         holder.cardImagePhotoPath?.let { Glide.with(context).load(card?.image?.src).into(it) };
         holder.cardImagePhotoPath?.background = context.resources.getDrawable(R.drawable.card_front)
     }

@@ -55,11 +55,24 @@ class GameFragment : Fragment() {
 
 
     private fun chooseCard(position: Int) {
-        // no cards or 2 cards are facing up
-        for (i in 0 until cards.size) {
-            cards[i].isFaceUp = false
+        if (!cards[position].isMatched && posOnlyFaceUpCard != -1) {
+            // checks if cards match
+            val matchIndex = posOnlyFaceUpCard
+            if (matchIndex != position) {
+                if (cards[position].id == cards[matchIndex].id) {
+                    cards[position].isMatched = true
+                    cards[matchIndex].isMatched = true
+                }
+                cards[position].isFaceUp = true
+                posOnlyFaceUpCard = -1
+            }
+        } else {
+            // no cards or 2 cards are facing up
+            for (i in 0 until cards.size) {
+                cards[i].isFaceUp = false
+            }
+            cards[position].isFaceUp = true
+            posOnlyFaceUpCard = position
         }
-        cards[position].isFaceUp = true
-        posOnlyFaceUpCard = position
     }
 }
