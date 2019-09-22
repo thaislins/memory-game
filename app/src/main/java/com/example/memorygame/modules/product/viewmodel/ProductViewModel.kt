@@ -24,7 +24,7 @@ class ProductViewModel() : ViewModel(), KoinComponent {
     val products = MutableLiveData<ArrayList<Product>>()
 
     /**
-     * This method launches a coroutine to allow an
+     * This method launches a coroutine to make an
      * API request
      *
      */

@@ -15,6 +15,7 @@ import com.example.memory_game.modules.product.model.Product
 import com.example.memorygame.R
 import com.example.memorygame.adapter.CardAdapter
 import com.example.memorygame.databinding.FragmentGameBinding
+import com.example.memorygame.exceptions.CardAlreadySelectedException
 import com.example.memorygame.modules.game.viewmodel.GameViewModel
 import java.util.*
 
@@ -56,15 +57,20 @@ class GameFragment : Fragment() {
     }
 
     private fun setClickListener() {
-        binding.gridView.setOnItemClickListener(AdapterView.OnItemClickListener { parent, view, position, id ->
-            // Get the GridView selected/clicked item text
-            val adapter = binding.gridView.adapter as CardAdapter
-            binding.viewModel?.chooseCard(position)
-            adapter.cardClickedPosition = position
+        binding.gridView.onItemClickListener =
+            AdapterView.OnItemClickListener { _, _, position, _ ->
+                // Get the GridView selected/clicked item text
+                try {
+                    binding.viewModel?.chooseCard(position)
+                    val adapter = binding.gridView.adapter as CardAdapter
+                    adapter.cardClickedPosition = position
 
-            gameViewModel?.updateLayout?.observe(this, Observer {
-                if (it) adapter.notifyDataSetChanged()
-            })
-        })
+                    gameViewModel?.updateLayout?.observe(this, Observer {
+                        if (it) adapter.notifyDataSetChanged()
+                    })
+                } catch (e: CardAlreadySelectedException) {
+                    // Do not do anything when re-selecting an already selected card
+                }
+            }
     }
 }

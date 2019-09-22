@@ -6,21 +6,22 @@ import androidx.lifecycle.ViewModel
 import com.example.memory_game.modules.card.model.Card
 import com.example.memory_game.modules.product.model.Image
 import com.example.memory_game.modules.product.model.Product
+import com.example.memorygame.exceptions.CardAlreadySelectedException
 import com.example.memorygame.modules.game.model.datasource.GameDataSourceImp
 import com.example.memorygame.modules.game.model.repository.GameRepository
 import org.koin.core.KoinComponent
 
 class GameViewModel : ViewModel(), KoinComponent {
 
-    val repository by lazy {
-        GameRepository(GameDataSourceImp())
-    }
-
     val posFirstCardFaceUp = MutableLiveData<Int>().apply { value = -1 }
     val posSecondCardFaceUp = MutableLiveData<Int>().apply { value = -1 }
     val updateLayout = MutableLiveData<Boolean>().apply { value = false }
     val delay: Long = 500
     val cards = MutableLiveData<List<Card>>().apply { value = emptyList() }
+
+    val repository by lazy {
+        GameRepository(GameDataSourceImp())
+    }
 
     fun getImageList(products: List<Product>?): List<Image> {
         val images = mutableListOf<Image>()
@@ -35,30 +36,31 @@ class GameViewModel : ViewModel(), KoinComponent {
 
     fun createCards(pairs: Int, amountMatches: Int, products: List<Product>?) {
         var images = getImageList(products)
-        images = images.shuffled().subList(0, pairs)
+        images = images.shuffled().take(pairs)
         cards.value = repository.showCards(pairs, amountMatches, images)
     }
 
     fun chooseCard(position: Int) {
-        // Makes sure when two cards are clicked a third can't be clicked
-        if (posSecondCardFaceUp.value == -1) {
-            // Checks if there already is one card up
-            if (!cards.value?.get(position)?.isMatched!! && posFirstCardFaceUp.value != -1) {
-                posSecondCardFaceUp.value = position
-                cards.value?.get(position)?.isFaceUp = true
-                updateLayout.value = true
+        // Makes sure you cannot select the same card twice and when two cards are clicked a third can't be clicked
+        if (position == posFirstCardFaceUp.value || posSecondCardFaceUp.value != -1) {
+            throw CardAlreadySelectedException()
+        }
+        // Checks if there already is one card up
+        if (!cards.value?.get(position)?.isMatched!! && posFirstCardFaceUp.value != -1) {
+            posSecondCardFaceUp.value = position
+            cards.value?.get(position)?.isFaceUp = true
+            updateLayout.value = true
 
-                Handler().postDelayed({
-                    updateLayout.value = false
-                    checkIfCardsMatch()
-                }, delay)
+            Handler().postDelayed({
+                updateLayout.value = false
+                checkIfCardsMatch()
+            }, delay)
 
-              // Makes sure that if a card is clicked more than once that it can't match itself
-            } else {
-                posFirstCardFaceUp.value = position
-                cards.value?.get(position)?.isFaceUp = true
-                updateLayout.value = true
-            }
+            // Makes sure that if a card is clicked more than once that it can't match itself
+        } else {
+            posFirstCardFaceUp.value = position
+            cards.value?.get(position)?.isFaceUp = true
+            updateLayout.value = true
         }
     }
 
