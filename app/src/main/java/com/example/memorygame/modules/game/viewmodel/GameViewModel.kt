@@ -3,12 +3,12 @@ package com.example.memorygame.modules.game.viewmodel
 import android.os.Handler
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.memorygame.modules.game.model.Card
-import com.example.memorygame.modules.home.model.Image
-import com.example.memorygame.modules.home.model.Product
 import com.example.memorygame.exceptions.CardAlreadySelectedException
+import com.example.memorygame.modules.game.model.Card
 import com.example.memorygame.modules.game.model.datasource.GameDataSourceImp
 import com.example.memorygame.modules.game.model.repository.GameRepository
+import com.example.memorygame.modules.home.model.Image
+import com.example.memorygame.modules.home.model.Product
 import org.koin.core.KoinComponent
 
 class GameViewModel : ViewModel(), KoinComponent {
@@ -16,6 +16,7 @@ class GameViewModel : ViewModel(), KoinComponent {
     private val posFirstCardFaceUp = MutableLiveData<Int>().apply { value = -1 }
     private val posSecondCardFaceUp = MutableLiveData<Int>().apply { value = -1 }
     val updateLayout = MutableLiveData<Boolean>().apply { value = false }
+    var matchedCardCount = MutableLiveData<Int>().apply { value = 0 }
     private val delay: Long = 500
     val cards = MutableLiveData<List<Card>>().apply { value = emptyList() }
 
@@ -71,6 +72,7 @@ class GameViewModel : ViewModel(), KoinComponent {
             if (it[firstCardPos].id == it[secondCardPos].id) {
                 it[firstCardPos].isMatched = true
                 it[secondCardPos].isMatched = true
+                matchedCardCount.value = matchedCardCount.value?.plus(2)
             }
             it[firstCardPos].isFaceUp = false
             it[secondCardPos].isFaceUp = false
