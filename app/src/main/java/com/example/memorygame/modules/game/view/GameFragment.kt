@@ -1,9 +1,9 @@
 package com.example.memorygame.modules.game.view
 
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.os.Handler
 import android.view.LayoutInflater
-import android.os.CountDownTimer;
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
@@ -36,19 +36,6 @@ class GameFragment : Fragment() {
         val adapter = CardAdapter(activity?.applicationContext!!, R.layout.item_card, cards)
         binding.gridView.adapter = adapter
 
-        object : CountDownTimer(90000, 1000) {
-
-            override fun onTick(millisUntilFinished: Long) {
-                val min = (millisUntilFinished/1000)/60
-                val sec = (millisUntilFinished/1000).rem(60)
-                tvCountdown.text = min.toString() + ":" + sec
-            }
-
-            override fun onFinish() {
-               //
-            }
-        }.start()
-
         return binding.root
     }
 
@@ -58,6 +45,23 @@ class GameFragment : Fragment() {
         binding.viewModel?.createCards(10, 2, products)
         setClickListener()
         Handler().postDelayed({ hideCards() }, 1000)
+        addCountdownTimer()
+    }
+
+    private fun addCountdownTimer() {
+        object : CountDownTimer(60000, 1000) {
+
+            override fun onTick(millisUntilFinished: Long) {
+                val min = (millisUntilFinished / 1000) / 60
+                val sec = (millisUntilFinished / 1000).rem(60)
+                if (sec < 10) tvCountdown.text = min.toString() + ":" + "0" + sec
+                else tvCountdown.text = min.toString() + ":" + sec
+            }
+
+            override fun onFinish() {
+                //
+            }
+        }.start()
     }
 
     private fun hideCards() {

@@ -3,4 +3,7 @@
     // Menu Fragment
     <string name="app_name">Memory Game</string>
     <string name="play">Play</string>
+
+    // Game Fragment
+    <string name="placeholder_timer">1:30</string>
 </resources>

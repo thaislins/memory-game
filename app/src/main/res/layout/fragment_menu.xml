@@ -22,7 +22,7 @@
         android:layout_margin="@dimen/standardMargin"
         android:text="@string/app_name"
         android:textAllCaps="true"
-        android:textSize="@dimen/appNameText"
+        android:textSize="@dimen/appNameTextSize"
         android:textStyle="bold"
         app:fontFamily="@font/carter_one"
         app:layout_constraintBottom_toBottomOf="parent"

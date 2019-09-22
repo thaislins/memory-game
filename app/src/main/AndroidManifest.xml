@@ -4,7 +4,8 @@
 
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
 
-    <application android:name="com.example.memorygame.application.MemoryGameApplication"
+    <application
+        android:name="com.example.memorygame.application.MemoryGameApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_logo"
         android:label="@string/app_name"
