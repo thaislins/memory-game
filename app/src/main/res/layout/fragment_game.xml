@@ -15,20 +15,33 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
+        android:background="@drawable/cork_board_repeating"
         android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tvCountdown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_timer"
+            android:text=""
+            android:layout_marginTop="@dimen/elementMargin"
+            android:layout_marginRight="@dimen/standardMargin"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
 
         <GridView
             android:id="@+id/gridView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="5dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/elementMargin"
             android:gravity="center"
             android:horizontalSpacing="@dimen/elementMargin"
             android:numColumns="4"
             android:verticalSpacing="@dimen/elementMargin"
             app:cards="@{viewModel.cards}"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/tvCountdown"
+            tools:listitem="@layout/item_card" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

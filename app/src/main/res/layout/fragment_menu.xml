@@ -8,35 +8,35 @@
 
     <ImageView
         android:id="@+id/ivLogo"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="@dimen/logoSize"
+        android:layout_height="@dimen/logoSize"
         android:src="@drawable/ic_memory_game_logo"
+        app:layout_constraintBottom_toTopOf="@id/tvName"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/tvName" />
+        app:layout_constraintRight_toRightOf="parent" />
 
     <TextView
         android:id="@+id/tvName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:textSize="18sp"
-        android:text="Memory Game"
+        android:layout_margin="@dimen/standardMargin"
+        android:text="@string/app_name"
         android:textAllCaps="true"
+        android:textSize="@dimen/appNameText"
         android:textStyle="bold"
         app:fontFamily="@font/carter_one"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="@id/ivLogo"
         app:layout_constraintRight_toRightOf="@id/ivLogo"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btPlay"
         android:layout_width="0dp"
-        android:layout_marginTop="20dp"
-        android:layout_height="45dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/standardMargin"
         android:background="@drawable/round_button"
-        android:text="PLAY"
+        android:text="@string/play"
         android:textColor="@color/white"
         app:layout_constraintLeft_toLeftOf="@id/ivLogo"
         app:layout_constraintRight_toRightOf="@id/ivLogo"

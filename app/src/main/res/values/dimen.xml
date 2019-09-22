@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="elementMargin">5dp</dimen>
-    <dimen name="gridView_cellWidth">100dp</dimen>
-    <dimen name="gridView_cellHeight"></dimen>
+    <dimen name="elementMargin">10dp</dimen>
+    <dimen name="standardMargin">20dp</dimen>
+    <dimen name="logoSize">150dp</dimen>
+    <dimen name="appNameText">18sp</dimen>
 </resources>

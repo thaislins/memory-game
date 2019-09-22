@@ -16,7 +16,6 @@ class CardAdapter(
 ) : ArrayAdapter<CardAdapter.CardHolder>(context, resource), AdapterItemsContract {
 
     lateinit var holder: CardHolder
-    var cardClickedPosition = -1
     var changedPositions = setOf<Int>()
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
@@ -68,7 +67,7 @@ class CardAdapter(
     }
 
     fun showFront(card: Card) {
-        holder.cardImagePhotoPath?.let { Glide.with(context).load(card?.image?.src).into(it) };
+        holder.cardImagePhotoPath?.let { Glide.with(context).load(card.image?.src).into(it) };
         holder.cardImagePhotoPath?.background = context.resources.getDrawable(R.drawable.card_front)
     }
 
@@ -84,7 +83,7 @@ class CardAdapter(
     }
 
     override fun getCount(): Int {
-        return if (this.cardList != null) this.cardList.size else 0
+        return cardList?.size ?: 0
     }
 
     class CardHolder {

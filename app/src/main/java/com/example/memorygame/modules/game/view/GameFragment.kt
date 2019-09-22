@@ -3,10 +3,10 @@ package com.example.memorygame.modules.game.view
 import android.os.Bundle
 import android.os.Handler
 import android.view.LayoutInflater
+import android.os.CountDownTimer;
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -17,6 +17,7 @@ import com.example.memorygame.adapter.CardAdapter
 import com.example.memorygame.databinding.FragmentGameBinding
 import com.example.memorygame.exceptions.CardAlreadySelectedException
 import com.example.memorygame.modules.game.viewmodel.GameViewModel
+import kotlinx.android.synthetic.main.fragment_game.*
 import java.util.*
 
 class GameFragment : Fragment() {
@@ -35,12 +36,24 @@ class GameFragment : Fragment() {
         val adapter = CardAdapter(activity?.applicationContext!!, R.layout.item_card, cards)
         binding.gridView.adapter = adapter
 
+        object : CountDownTimer(90000, 1000) {
+
+            override fun onTick(millisUntilFinished: Long) {
+                val min = (millisUntilFinished/1000)/60
+                val sec = (millisUntilFinished/1000).rem(60)
+                tvCountdown.text = min.toString() + ":" + sec
+            }
+
+            override fun onFinish() {
+               //
+            }
+        }.start()
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (activity as AppCompatActivity).supportActionBar!!.show()
         val products: ArrayList<Product>? = arguments?.getParcelableArrayList("key_product_list")
         binding.viewModel?.createCards(10, 2, products)
         setClickListener()

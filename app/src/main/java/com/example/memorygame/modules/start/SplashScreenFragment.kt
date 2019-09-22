@@ -11,7 +11,7 @@ import android.view.animation.AnimationSet
 import android.view.animation.DecelerateInterpolator
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.memorygame.R
 import kotlinx.android.synthetic.main.fragment_splash_screen.*
@@ -36,7 +36,7 @@ class SplashScreenFragment : Fragment() {
         Glide.with(this).asGif().load(R.drawable.splashscreengif).into(ivSplashScreen)
         Handler().postDelayed({
             fadeOut()
-            view?.findNavController()?.navigate(R.id.toMenuFragment)
+            findNavController(this).navigate(R.id.toMenuFragment)
         }, delay)
     }
 

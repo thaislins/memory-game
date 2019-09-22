@@ -14,7 +14,6 @@ class GameDataSourceImp : GameDataSource {
             card.image = images[i - 1]
             val card2 = card.copy()
             cards.addAll(Arrays.asList(card, card2))
-            //MutableList(amountMatches) { card }
         }
         return cards.shuffled() as MutableList<Card>
     }
