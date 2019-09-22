@@ -24,14 +24,7 @@ class GameViewModel : ViewModel(), KoinComponent {
     }
 
     fun getImageList(products: List<Product>?): List<Image> {
-        val images = mutableListOf<Image>()
-        if (products != null) {
-            for (product in products) {
-                images.add(product.image!!)
-            }
-        }
-
-        return images
+        return products?.map { it.image!! } ?: listOf()
     }
 
     fun createCards(pairs: Int, amountMatches: Int, products: List<Product>?) {

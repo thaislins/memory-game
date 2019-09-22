@@ -17,6 +17,7 @@ class CardAdapter(
 
     lateinit var holder: CardHolder
     var cardClickedPosition = -1
+    var changedPositions = setOf<Int>()
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         var convView = convertView
@@ -41,13 +42,13 @@ class CardAdapter(
             hideCard()
         } else {
             if (card.isFaceUp) {
-                if (cardClickedPosition.equals(position)) {
+                if (changedPositions.contains(position)) {
                     flipAnimation(R.animator.card_flip_right_out)
                     flipAnimation(R.animator.card_flip_left_in)
                 }
                 showFront(card)
             } else {
-                if (cardClickedPosition.equals(position)) {
+                if (changedPositions.contains(position)) {
                     flipAnimation(R.animator.card_flip_left_out)
                     flipAnimation(R.animator.card_flip_right_in)
                 }

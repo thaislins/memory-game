@@ -49,11 +49,9 @@ class GameFragment : Fragment() {
 
     private fun hideCards() {
         val adapter = binding.gridView.adapter as CardAdapter
-        for (pos in 0 until cards.size) {
-            cards[pos].isFaceUp = false
-            adapter.cardClickedPosition = pos
-            adapter.notifyDataSetChanged()
-        }
+        cards.forEach { it.isFaceUp = false }
+        adapter.changedPositions = (0..cards.size).toSet()
+        adapter.notifyDataSetChanged()
     }
 
     private fun setClickListener() {
@@ -63,7 +61,7 @@ class GameFragment : Fragment() {
                 try {
                     binding.viewModel?.chooseCard(position)
                     val adapter = binding.gridView.adapter as CardAdapter
-                    adapter.cardClickedPosition = position
+                    adapter.changedPositions = setOf(position)
 
                     gameViewModel?.updateLayout?.observe(this, Observer {
                         if (it) adapter.notifyDataSetChanged()
