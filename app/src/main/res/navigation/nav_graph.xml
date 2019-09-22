@@ -6,7 +6,7 @@
     app:startDestination="@id/splashScreenFragment">
     <fragment
         android:id="@+id/menuFragment"
-        android:name="com.example.memorygame.modules.product.view.MenuFragment"
+        android:name="com.example.memorygame.modules.home.view.MenuFragment"
         android:label="fragment_menu"
         tools:layout="@layout/fragment_menu">
         <action
@@ -24,7 +24,7 @@
         tools:layout="@layout/fragment_game" />
     <fragment
         android:id="@+id/splashScreenFragment"
-        android:name="com.example.memorygame.modules.start.SplashScreenFragment"
+        android:name="com.example.memorygame.modules.splashscreen.SplashScreenFragment"
         android:label="fragment_splash_screen"
         tools:layout="@layout/fragment_splash_screen">
         <action

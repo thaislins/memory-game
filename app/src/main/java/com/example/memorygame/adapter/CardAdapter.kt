@@ -8,14 +8,14 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import com.bumptech.glide.Glide
-import com.example.memory_game.modules.card.model.Card
+import com.example.memorygame.modules.game.model.Card
 import com.example.memorygame.R
 
 class CardAdapter(
     context: Context, private val resource: Int, private val cardList: MutableList<Card>?
 ) : ArrayAdapter<CardAdapter.CardHolder>(context, resource), AdapterItemsContract {
 
-    lateinit var holder: CardHolder
+    private lateinit var holder: CardHolder
     var changedPositions = setOf<Int>()
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
@@ -66,8 +66,8 @@ class CardAdapter(
             context.resources.getDrawable((R.drawable.card_back))
     }
 
-    fun showFront(card: Card) {
-        holder.cardImagePhotoPath?.let { Glide.with(context).load(card.image?.src).into(it) };
+    private fun showFront(card: Card) {
+        holder.cardImagePhotoPath?.let { Glide.with(context).load(card.image?.src).into(it) }
         holder.cardImagePhotoPath?.background = context.resources.getDrawable(R.drawable.card_front)
     }
 

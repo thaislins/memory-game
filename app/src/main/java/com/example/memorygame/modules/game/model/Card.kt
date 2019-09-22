@@ -1,6 +1,6 @@
-package com.example.memory_game.modules.card.model
+package com.example.memorygame.modules.game.model
 
-import com.example.memory_game.modules.product.model.Image
+import com.example.memorygame.modules.home.model.Image
 
 data class Card(
     var id: Int,
@@ -11,7 +11,7 @@ data class Card(
     constructor() : this(getUniqueId(), true, false, null)
 
     companion object {
-        var identifierFactory: Int = 0
+        private var identifierFactory: Int = 0
 
         private fun getUniqueId(): Int {
             identifierFactory += 1

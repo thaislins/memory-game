@@ -1,6 +1,6 @@
 package com.example.memorygame.data
 
-import com.example.memory_game.modules.product.model.Shopify
+import com.example.memorygame.modules.home.model.Shopify
 import retrofit2.http.GET
 import retrofit2.http.Query
 

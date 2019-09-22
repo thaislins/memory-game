@@ -7,13 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
-import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.example.memory_game.modules.card.model.Card
-import com.example.memory_game.modules.product.model.Product
+import com.example.memorygame.modules.game.model.Card
+import com.example.memorygame.modules.home.model.Product
 import com.example.memorygame.R
 import com.example.memorygame.adapter.CardAdapter
 import com.example.memorygame.databinding.FragmentGameBinding
@@ -26,6 +25,7 @@ class GameFragment : Fragment() {
 
     private var cards = mutableListOf<Card>()
     private lateinit var binding: FragmentGameBinding
+    private var gameOver = 0
     private val gameViewModel: GameViewModel? by lazy {
         ViewModelProviders.of(this).get(GameViewModel::class.java)
     }
@@ -56,11 +56,13 @@ class GameFragment : Fragment() {
             override fun onTick(millisUntilFinished: Long) {
                 val min = (millisUntilFinished / 1000) / 60
                 val sec = (millisUntilFinished / 1000).rem(60)
-                if (sec < 10) tvCountdown.text = min.toString() + ":" + "0" + sec
-                else tvCountdown.text = min.toString() + ":" + sec
+                val secString : String = if (sec < 10) "0$sec" else sec.toString()
+
+                tvCountdown.text = resources.getString(R.string.timer_value, min, secString)
             }
 
             override fun onFinish() {
+                gameOver = 1
                 showEndGameDialog()
             }
         }.start()

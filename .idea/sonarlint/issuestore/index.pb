@@ -45,8 +45,6 @@ s
 Capp/src/main/java/com/example/memorygame/adapter/BindingAdapters.kt,8/1/81b3f7fc4b80f4d6ae283987b42d381bc4be6d61
 }
 Mapp/src/main/java/com/example/memorygame/application/MemoryGameGlideModule.kt,f/e/fe132fbdd0f31d111949212e2c6a883cdcf761c2
-p
-@app/src/main/java/com/example/memorygame/modules/MainActivity.kt,c/2/c2ff430bcffd73da759b1afc850cfc20387defb7
 z
 Japp/src/main/java/com/example/memorygame/modules/game/view/GameFragment.kt,c/0/c0e007e040003cb72defa15f68e24d3617cf9e52
 }

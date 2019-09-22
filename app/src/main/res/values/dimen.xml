@@ -3,7 +3,11 @@
     <dimen name="smallMargin">5dp</dimen>
     <dimen name="mediumMargin">10dp</dimen>
     <dimen name="largeMargin">20dp</dimen>
-    <dimen name="logoSize">150dp</dimen>
-    <dimen name="appNameTextSize">18sp</dimen>
-    <dimen name="TimerTextSize">24sp</dimen>
+
+    <dimen name="smallSize">50dp</dimen>
+    <dimen name="mediumSize">100dp</dimen>
+    <dimen name="largeSize">150dp</dimen>
+
+    <dimen name="mediumTextSize">18sp</dimen>
+    <dimen name="largeTextSize">24sp</dimen>
 </resources>

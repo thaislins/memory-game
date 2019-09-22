@@ -3,9 +3,9 @@ package com.example.memorygame.modules.game.viewmodel
 import android.os.Handler
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.memory_game.modules.card.model.Card
-import com.example.memory_game.modules.product.model.Image
-import com.example.memory_game.modules.product.model.Product
+import com.example.memorygame.modules.game.model.Card
+import com.example.memorygame.modules.home.model.Image
+import com.example.memorygame.modules.home.model.Product
 import com.example.memorygame.exceptions.CardAlreadySelectedException
 import com.example.memorygame.modules.game.model.datasource.GameDataSourceImp
 import com.example.memorygame.modules.game.model.repository.GameRepository
@@ -13,17 +13,17 @@ import org.koin.core.KoinComponent
 
 class GameViewModel : ViewModel(), KoinComponent {
 
-    val posFirstCardFaceUp = MutableLiveData<Int>().apply { value = -1 }
-    val posSecondCardFaceUp = MutableLiveData<Int>().apply { value = -1 }
+    private val posFirstCardFaceUp = MutableLiveData<Int>().apply { value = -1 }
+    private val posSecondCardFaceUp = MutableLiveData<Int>().apply { value = -1 }
     val updateLayout = MutableLiveData<Boolean>().apply { value = false }
-    val delay: Long = 500
+    private val delay: Long = 500
     val cards = MutableLiveData<List<Card>>().apply { value = emptyList() }
 
-    val repository by lazy {
+    private val repository by lazy {
         GameRepository(GameDataSourceImp())
     }
 
-    fun getImageList(products: List<Product>?): List<Image> {
+    private fun getImageList(products: List<Product>?): List<Image> {
         return products?.map { it.image!! } ?: listOf()
     }
 

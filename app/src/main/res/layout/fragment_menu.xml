@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".modules.product.view.MenuFragment">
+    tools:context=".modules.home.view.MenuFragment">
 
     <ImageView
         android:id="@+id/ivLogo"
-        android:layout_width="@dimen/logoSize"
-        android:layout_height="@dimen/logoSize"
+        android:layout_width="@dimen/largeSize"
+        android:layout_height="@dimen/largeSize"
         android:src="@drawable/ic_memory_game_logo"
         app:layout_constraintBottom_toTopOf="@id/btnPlay"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -23,7 +23,7 @@
         android:layout_margin="@dimen/largeMargin"
         android:text="@string/app_name"
         android:textAllCaps="true"
-        android:textSize="@dimen/appNameTextSize"
+        android:textSize="@dimen/mediumTextSize"
         android:textStyle="bold"
         app:fontFamily="@font/carter_one"
         app:layout_constraintBottom_toTopOf="@id/btnPlay"

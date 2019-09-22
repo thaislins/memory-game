@@ -3,14 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    tools:context="com.example.memory_game.MainActivity">
+    tools:context=".modules.MainActivity">
 
-    <com.example.memorygame.views.CardImageView
+    <com.example.memorygame.view.CardImageView
         android:id="@+id/ivCardGame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/card_back"
-        android:padding="10dp"
+        android:padding="@dimen/mediumMargin"
         android:src="@drawable/ic_card_back"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

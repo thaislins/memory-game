@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".modules.start.SplashScreenFragment">
+    tools:context=".modules.splashscreen.SplashScreenFragment">
 
     <ImageView
         android:id="@+id/ivSplashScreen"
