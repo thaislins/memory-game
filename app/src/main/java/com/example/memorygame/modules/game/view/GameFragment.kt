@@ -1,7 +1,6 @@
 package com.example.memorygame.modules.game.view
 
 import android.os.Bundle
-import android.os.CountDownTimer
 import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
@@ -11,13 +10,13 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.example.memorygame.modules.game.model.Card
-import com.example.memorygame.modules.home.model.Product
 import com.example.memorygame.R
 import com.example.memorygame.adapter.CardAdapter
 import com.example.memorygame.databinding.FragmentGameBinding
 import com.example.memorygame.exceptions.CardAlreadySelectedException
+import com.example.memorygame.modules.game.model.Card
 import com.example.memorygame.modules.game.viewmodel.GameViewModel
+import com.example.memorygame.modules.home.model.Product
 import kotlinx.android.synthetic.main.fragment_game.*
 import java.util.*
 
@@ -25,7 +24,6 @@ class GameFragment : Fragment() {
 
     private var cards = mutableListOf<Card>()
     private lateinit var binding: FragmentGameBinding
-    private var gameOver = 0
     private val gameViewModel: GameViewModel? by lazy {
         ViewModelProviders.of(this).get(GameViewModel::class.java)
     }
@@ -47,25 +45,7 @@ class GameFragment : Fragment() {
         binding.viewModel?.createCards(10, 2, products)
         setClickListener()
         Handler().postDelayed({ hideCards() }, 1000)
-        addCountdownTimer()
-    }
-
-    private fun addCountdownTimer() {
-        object : CountDownTimer(90000, 1000) {
-
-            override fun onTick(millisUntilFinished: Long) {
-                val min = (millisUntilFinished / 1000) / 60
-                val sec = (millisUntilFinished / 1000).rem(60)
-                val secString : String = if (sec < 10) "0$sec" else sec.toString()
-
-                tvCountdown.text = resources.getString(R.string.timer_value, min, secString)
-            }
-
-            override fun onFinish() {
-                gameOver = 1
-                showEndGameDialog()
-            }
-        }.start()
+        chronometer.start()
     }
 
     fun showEndGameDialog() {

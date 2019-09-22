@@ -16,23 +16,25 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/cork_board_repeating">
+        android:background="@drawable/game_background">
 
-
-        <TextView
-            android:id="@+id/tvCountdown"
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/smallMargin"
-            android:layout_marginEnd="@dimen/largeMargin"
-            android:layout_marginRight="@dimen/largeMargin"
-            android:drawableStart="@drawable/ic_timer"
-            android:drawableLeft="@drawable/ic_timer"
-            android:drawablePadding="@dimen/smallMargin"
-            android:text="@string/placeholder_timer"
+            android:layout_marginRight="@dimen/smallMargin"
+            app:layout_constraintRight_toLeftOf="@id/chronometer"
+            app:layout_constraintTop_toTopOf="@id/chronometer"
+            app:layout_constraintBottom_toBottomOf="@id/chronometer"
+            android:src="@drawable/ic_timer"/>
+
+        <Chronometer
+            android:id="@+id/chronometer"
+            android:layout_width="wrap_content"
+            android:layout_margin="@dimen/smallMargin"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/carter_one"
+            android:textColor="@color/white"
             android:textSize="@dimen/largeTextSize"
-            android:textStyle="bold"
-            app:fontFamily="@font/carter_one"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -42,15 +44,15 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/smallMargin"
             android:gravity="center"
-            android:horizontalSpacing="@dimen/smallMargin"
+            android:horizontalSpacing="@dimen/mediumMargin"
             android:listSelector="@android:color/transparent"
             android:numColumns="4"
-            android:verticalSpacing="@dimen/smallMargin"
+            android:verticalSpacing="@dimen/mediumMargin"
             app:cards="@{viewModel.cards}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvCountdown"
+            app:layout_constraintTop_toBottomOf="@id/chronometer"
             tools:listitem="@layout/item_card" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,13 +12,13 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import com.example.memorygame.R
-import com.example.memorygame.modules.home.viewmodel.ProductViewModel
+import com.example.memorygame.modules.home.viewmodel.HomeViewModel
 import kotlinx.android.synthetic.main.fragment_menu.*
 import org.koin.android.ext.android.inject
 
-class MenuFragment : Fragment() {
+class HomeFragment : Fragment() {
 
-    private val productViewModel: ProductViewModel by inject()
+    private val homeViewModel: HomeViewModel by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,7 +32,7 @@ class MenuFragment : Fragment() {
         (activity as AppCompatActivity).supportActionBar!!.hide()
 
         fadeIn()
-        productViewModel.loadProducts()
+        homeViewModel.loadProducts()
         goToGameFragment()
     }
 
@@ -49,11 +49,11 @@ class MenuFragment : Fragment() {
     private fun goToGameFragment() {
         btnPlay.setOnClickListener {
             val bundle = Bundle()
-            bundle.putParcelableArrayList("key_product_list", productViewModel.products.value)
+            bundle.putParcelableArrayList("key_product_list", homeViewModel.products.value)
             view?.findNavController()?.navigate(R.id.toGameFragment, bundle)
         }
 
-        productViewModel.products.observe(this, Observer {
+        homeViewModel.products.observe(this, Observer {
             if (it != null) {
                 pbLoadProducts.visibility = View.GONE
                 btnPlay.visibility = View.VISIBLE

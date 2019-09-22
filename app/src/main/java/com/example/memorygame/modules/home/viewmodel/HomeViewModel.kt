@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 
-class ProductViewModel : ViewModel(), KoinComponent {
+class HomeViewModel : ViewModel(), KoinComponent {
 
     private val productApi: ProductApi? by inject()
 
