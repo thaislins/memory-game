@@ -38,37 +38,46 @@ class GameViewModel : ViewModel(), KoinComponent {
         if (position == posFirstCardFaceUp.value || posSecondCardFaceUp.value != -1) {
             throw CardAlreadySelectedException()
         }
-        // Checks if there already is one card up
-        if (!cards.value?.get(position)?.isMatched!! && posFirstCardFaceUp.value != -1) {
-            posSecondCardFaceUp.value = position
-            cards.value?.get(position)?.isFaceUp = true
-            updateLayout.value = true
+        cards.value?.also {
+            // Makes sure you cannot select an already matched card
+            if (it[position].isMatched) {
+                throw CardAlreadySelectedException()
+            }
+            // Checks if there already is one card up
+            if (!it[position].isMatched && posFirstCardFaceUp.value != -1) {
+                posSecondCardFaceUp.value = position
+                it[position].isFaceUp = true
+                updateLayout.value = true
 
-            Handler().postDelayed({
-                updateLayout.value = false
-                checkIfCardsMatch()
-            }, delay)
+                Handler().postDelayed({
+                    updateLayout.value = false
+                    checkIfCardsMatch()
+                }, delay)
 
-            // Makes sure that if a card is clicked more than once that it can't match itself
-        } else {
-            posFirstCardFaceUp.value = position
-            cards.value?.get(position)?.isFaceUp = true
-            updateLayout.value = true
+                // Makes sure that if a card is clicked more than once that it can't match itself
+            } else {
+                posFirstCardFaceUp.value = position
+                it[position].isFaceUp = true
+                updateLayout.value = true
+            }
         }
     }
 
     private fun checkIfCardsMatch() {
-        if (cards.value?.get(posFirstCardFaceUp.value!!)?.id == cards.value?.get(posSecondCardFaceUp.value!!)?.id) {
-            cards.value?.get(posFirstCardFaceUp.value!!)?.isMatched = true
-            cards.value?.get(posSecondCardFaceUp.value!!)?.isMatched = true
-        }
+        val firstCardPos = posFirstCardFaceUp.value!!
+        val secondCardPos = posSecondCardFaceUp.value!!
 
-        cards.value?.get(posFirstCardFaceUp.value!!)?.isFaceUp = false
-        cards.value?.get(posSecondCardFaceUp.value!!)?.isFaceUp = false
+        cards.value?.also {
+            if (it[firstCardPos].id == it[secondCardPos].id) {
+                it[firstCardPos].isMatched = true
+                it[secondCardPos].isMatched = true
+            }
+            it[firstCardPos].isFaceUp = false
+            it[secondCardPos].isFaceUp = false
+        }
 
         posFirstCardFaceUp.value = -1
         posSecondCardFaceUp.value = -1
-
         updateLayout.value = true
     }
 }
