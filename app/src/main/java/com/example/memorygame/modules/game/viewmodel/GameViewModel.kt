@@ -19,7 +19,7 @@ class GameViewModel : ViewModel(), KoinComponent {
     val posFirstCardFaceUp = MutableLiveData<Int>().apply { value = -1 }
     val posSecondCardFaceUp = MutableLiveData<Int>().apply { value = -1 }
     val updateLayout = MutableLiveData<Boolean>().apply { value = false }
-    val delay: Long = 600
+    val delay: Long = 500
     val cards = MutableLiveData<List<Card>>().apply { value = emptyList() }
 
     fun getImageList(products: List<Product>?): List<Image> {
@@ -40,7 +40,9 @@ class GameViewModel : ViewModel(), KoinComponent {
     }
 
     fun chooseCard(position: Int) {
+        // Makes sure when two cards are clicked a third can't be clicked
         if (posSecondCardFaceUp.value == -1) {
+            // Checks if there already is one card up
             if (!cards.value?.get(position)?.isMatched!! && posFirstCardFaceUp.value != -1) {
                 posSecondCardFaceUp.value = position
                 cards.value?.get(position)?.isFaceUp = true
@@ -50,6 +52,8 @@ class GameViewModel : ViewModel(), KoinComponent {
                     updateLayout.value = false
                     checkIfCardsMatch()
                 }, delay)
+
+              // Makes sure that if a card is clicked more than once that it can't match itself
             } else {
                 posFirstCardFaceUp.value = position
                 cards.value?.get(position)?.isFaceUp = true

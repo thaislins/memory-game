@@ -8,7 +8,7 @@ data class Card(
     var isMatched: Boolean,
     var image: Image?
 ) {
-    constructor() : this(getUniqueId(), false, false, null)
+    constructor() : this(getUniqueId(), true, false, null)
 
     companion object {
         var identifierFactory: Int = 0

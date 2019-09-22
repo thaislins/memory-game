@@ -1,5 +1,6 @@
 package com.example.memorygame.adapter
 
+import android.animation.AnimatorInflater
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -37,35 +38,43 @@ class CardAdapter(
         val card = cardList?.get(position)
         // Checks if card is face up or down to define its content
         if (card?.isMatched!!) {
-            hideCard(card, holder)
+            hideCard()
         } else {
             if (card.isFaceUp) {
-                showFront(card, holder)
+                if (cardClickedPosition.equals(position)) {
+                    flipAnimation(R.animator.card_flip_right_out)
+                    flipAnimation(R.animator.card_flip_left_in)
+                }
+                showFront(card)
             } else {
-                showBack(card, holder)
+                if (cardClickedPosition.equals(position)) {
+                    flipAnimation(R.animator.card_flip_left_out)
+                    flipAnimation(R.animator.card_flip_right_in)
+                }
+                showBack()
             }
         }
     }
 
-    private fun flipAnimation(res: Int) {
-//        val flip = AnimatorInflater.loadAnimator(context, res)
-//        flip.setTarget(holder.cardImagePhotoPath)
-//        flip.start()
-    }
-
-    private fun hideCard(card: Card, holder: CardHolder) {
+    private fun hideCard() {
         holder.cardImagePhotoPath?.visibility = View.INVISIBLE
     }
 
-    private fun showBack(card: Card, holder: CardHolder) {
+    private fun showBack() {
         holder.cardImagePhotoPath?.setImageDrawable(context.resources.getDrawable((R.drawable.ic_card_back)))
         holder.cardImagePhotoPath?.background =
             context.resources.getDrawable((R.drawable.card_back))
     }
 
-    fun showFront(card: Card?, holder: CardHolder) {
+    fun showFront(card: Card) {
         holder.cardImagePhotoPath?.let { Glide.with(context).load(card?.image?.src).into(it) };
         holder.cardImagePhotoPath?.background = context.resources.getDrawable(R.drawable.card_front)
+    }
+
+    private fun flipAnimation(res: Int) {
+        val flip = AnimatorInflater.loadAnimator(context, res)
+        flip.setTarget(holder.cardImagePhotoPath)
+        flip.start()
     }
 
     override fun replaceItems(list: List<*>) {

@@ -13,14 +13,21 @@
         <import type="android.view.View" />
     </data>
 
-    <GridView
-        android:id="@+id/gridView"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:horizontalSpacing="@dimen/elementMargin"
-        android:numColumns="4"
-        android:verticalSpacing="@dimen/elementMargin"
-        app:cards="@{viewModel.cards}" />
+        android:layout_height="match_parent">
 
+        <GridView
+            android:id="@+id/gridView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:horizontalSpacing="@dimen/elementMargin"
+            android:numColumns="4"
+            android:verticalSpacing="@dimen/elementMargin"
+            app:cards="@{viewModel.cards}"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

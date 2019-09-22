@@ -4,6 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AlphaAnimation
+import android.view.animation.AnimationSet
+import android.view.animation.DecelerateInterpolator
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
@@ -27,10 +30,20 @@ class MenuFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         (activity as AppCompatActivity).supportActionBar!!.hide()
 
+        fadeIn()
         productViewModel.loadProducts()
         goToGameFragment()
     }
 
+    private fun fadeIn() {
+        val fadeIn = AlphaAnimation(0f, 1f)
+        fadeIn.interpolator = DecelerateInterpolator()
+        fadeIn.duration = 1000
+
+        val animation = AnimationSet(false)
+        animation.addAnimation(fadeIn)
+        view?.animation = animation
+    }
 
     fun goToGameFragment() {
         btPlay.setOnClickListener {

@@ -1,10 +1,12 @@
 package com.example.memorygame.modules.game.view
 
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -37,9 +39,20 @@ class GameFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (activity as AppCompatActivity).supportActionBar!!.show()
         val products: ArrayList<Product>? = arguments?.getParcelableArrayList("key_product_list")
         binding.viewModel?.createCards(10, 2, products)
         setClickListener()
+        Handler().postDelayed({ hideCards() }, 1000)
+    }
+
+    private fun hideCards() {
+        val adapter = binding.gridView.adapter as CardAdapter
+        for (pos in 0 until cards.size) {
+            cards[pos].isFaceUp = false
+            adapter.cardClickedPosition = pos
+            adapter.notifyDataSetChanged()
+        }
     }
 
     private fun setClickListener() {
@@ -47,6 +60,7 @@ class GameFragment : Fragment() {
             // Get the GridView selected/clicked item text
             val adapter = binding.gridView.adapter as CardAdapter
             binding.viewModel?.chooseCard(position)
+            adapter.cardClickedPosition = position
 
             gameViewModel?.updateLayout?.observe(this, Observer {
                 if (it) adapter.notifyDataSetChanged()

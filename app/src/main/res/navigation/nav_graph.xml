@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/menuFragment">
+    app:startDestination="@id/splashScreenFragment">
     <fragment
         android:id="@+id/menuFragment"
         android:name="com.example.memorygame.modules.product.view.MenuFragment"
@@ -11,11 +11,24 @@
         tools:layout="@layout/fragment_menu">
         <action
             android:id="@+id/toGameFragment"
-            app:destination="@id/gameFragment" />
+            app:destination="@id/gameFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/gameFragment"
         android:name="com.example.memorygame.modules.game.view.GameFragment"
         android:label="fragment_game"
         tools:layout="@layout/fragment_game" />
+    <fragment
+        android:id="@+id/splashScreenFragment"
+        android:name="com.example.memorygame.modules.start.SplashScreenFragment"
+        android:label="fragment_splash_screen"
+        tools:layout="@layout/fragment_splash_screen" >
+        <action
+            android:id="@+id/toMenuFragment"
+            app:destination="@id/menuFragment" />
+    </fragment>
 </navigation>
