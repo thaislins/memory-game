@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import android.widget.EditText
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -49,7 +51,7 @@ class GameFragment : Fragment() {
     }
 
     private fun addCountdownTimer() {
-        object : CountDownTimer(60000, 1000) {
+        object : CountDownTimer(90000, 1000) {
 
             override fun onTick(millisUntilFinished: Long) {
                 val min = (millisUntilFinished / 1000) / 60
@@ -59,9 +61,19 @@ class GameFragment : Fragment() {
             }
 
             override fun onFinish() {
-                //
+                showEndGameDialog()
             }
         }.start()
+    }
+
+    fun showEndGameDialog() {
+        val dialogBuilder = activity?.let { AlertDialog.Builder(it) }
+        val inflater = this.layoutInflater
+        val dialogView = inflater.inflate(R.layout.end_game_dialog, null)
+        dialogBuilder?.setView(dialogView)
+
+        val alertDialog = dialogBuilder?.create()
+        alertDialog?.show()
     }
 
     private fun hideCards() {

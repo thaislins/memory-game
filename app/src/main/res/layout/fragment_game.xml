@@ -18,12 +18,13 @@
         android:layout_height="match_parent"
         android:background="@drawable/cork_board_repeating">
 
+
         <TextView
             android:id="@+id/tvCountdown"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/cellMargin"
-            android:layout_marginRight="@dimen/standardMargin"
+            android:layout_marginTop="@dimen/smallMargin"
+            android:layout_marginRight="@dimen/largeMargin"
             android:drawableLeft="@drawable/ic_timer"
             android:drawablePadding="@dimen/smallMargin"
             android:text="@string/placeholder_timer"
@@ -37,13 +38,15 @@
             android:id="@+id/gridView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/cellMargin"
+            android:layout_margin="@dimen/smallMargin"
             android:gravity="center"
-            android:horizontalSpacing="@dimen/cellMargin"
+            android:horizontalSpacing="@dimen/smallMargin"
             android:listSelector="@android:color/transparent"
             android:numColumns="4"
-            android:verticalSpacing="@dimen/cellMargin"
+            android:verticalSpacing="@dimen/smallMargin"
             app:cards="@{viewModel.cards}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvCountdown"
             tools:listitem="@layout/item_card" />

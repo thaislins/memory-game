@@ -15,7 +15,7 @@ class CardImageView @JvmOverloads constructor(
 ) : AppCompatImageView(context, attrs, defStyleAttr) {
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         val widthSize = MeasureSpec.getSize(widthMeasureSpec)
-        val heightSize = (widthSize * 1.3).roundToInt()
+        val heightSize = (widthSize * 1.25).roundToInt()
 
         super.onMeasure(
             widthMeasureSpec,

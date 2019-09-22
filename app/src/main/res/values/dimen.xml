@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="cellMargin">10dp</dimen>
     <dimen name="smallMargin">5dp</dimen>
-    <dimen name="standardMargin">20dp</dimen>
+    <dimen name="mediumMargin">10dp</dimen>
+    <dimen name="largeMargin">20dp</dimen>
     <dimen name="logoSize">150dp</dimen>
     <dimen name="appNameTextSize">18sp</dimen>
     <dimen name="TimerTextSize">24sp</dimen>

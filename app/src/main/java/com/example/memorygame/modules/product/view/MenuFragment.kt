@@ -9,6 +9,7 @@ import android.view.animation.AnimationSet
 import android.view.animation.DecelerateInterpolator
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import com.example.memory_game.modules.product.viewmodel.ProductViewModel
 import com.example.memorygame.R
@@ -46,10 +47,17 @@ class MenuFragment : Fragment() {
     }
 
     fun goToGameFragment() {
-        btPlay.setOnClickListener {
+        btnPlay.setOnClickListener {
             val bundle = Bundle()
             bundle.putParcelableArrayList("key_product_list", productViewModel.products.value)
             view?.findNavController()?.navigate(R.id.toGameFragment, bundle)
         }
+
+        productViewModel.products.observe(this, Observer {
+            if (it != null) {
+                pbLoadProducts.visibility = View.GONE
+                btnPlay.visibility = View.VISIBLE
+            }
+        })
     }
 }
