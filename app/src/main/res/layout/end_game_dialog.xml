@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/ic_trophy"
             android:fontFamily="@font/carter_one"
-            android:text="@string/placeholder_score"
+            android:text="@string/placeholder_total_score"
             android:textAllCaps="true"
             android:textColor="#ffffff" />
 

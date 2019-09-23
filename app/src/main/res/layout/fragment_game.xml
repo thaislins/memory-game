@@ -18,23 +18,58 @@
         android:layout_height="match_parent"
         android:background="@drawable/game_background">
 
-        <ImageView
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/smallMargin"
+            android:layout_marginLeft="@dimen/smallMargin"
+            android:text="@string/placeholder_amount_moves"
+            android:textColor="@color/white"
+            android:textSize="@dimen/mediumTextSize"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/ivChronometer"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="@id/chronometer" />
+
+        <TextView
+            android:id="@+id/ivScore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/smallMargin"
+            android:layout_marginEnd="@dimen/smallMargin"
             android:layout_marginRight="@dimen/smallMargin"
-            app:layout_constraintRight_toLeftOf="@id/chronometer"
-            app:layout_constraintTop_toTopOf="@id/chronometer"
+            android:drawableStart="@drawable/ic_trophy"
+            android:drawableLeft="@drawable/ic_trophy"
+            android:drawablePadding="@dimen/smallMargin"
+            android:text="@string/placeholder_score"
+            android:textColor="@color/white"
+            android:textSize="@dimen/mediumTextSize"
+            android:textStyle="bold"
+
             app:layout_constraintBottom_toBottomOf="@id/chronometer"
-            android:src="@drawable/ic_timer"/>
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/chronometer" />
+
+        <ImageView
+            android:id="@+id/ivChronometer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/smallMargin"
+            android:layout_marginRight="@dimen/smallMargin"
+            android:src="@drawable/ic_timer"
+            app:layout_constraintBottom_toBottomOf="@id/chronometer"
+            app:layout_constraintRight_toLeftOf="@id/chronometer"
+            app:layout_constraintTop_toTopOf="@id/chronometer" />
 
         <Chronometer
             android:id="@+id/chronometer"
             android:layout_width="wrap_content"
-            android:layout_margin="@dimen/smallMargin"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/carter_one"
+            android:layout_margin="@dimen/smallMargin"
             android:textColor="@color/white"
-            android:textSize="@dimen/largeTextSize"
+            android:textSize="@dimen/mediumTextSize"
+            android:textStyle="bold"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
