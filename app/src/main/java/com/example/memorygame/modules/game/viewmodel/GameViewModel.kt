@@ -5,24 +5,21 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.memorygame.exceptions.CardAlreadySelectedException
 import com.example.memorygame.modules.game.model.Card
-import com.example.memorygame.modules.game.model.datasource.GameDataSourceImp
 import com.example.memorygame.modules.game.model.repository.GameRepository
 import com.example.memorygame.modules.home.model.Image
 import com.example.memorygame.modules.home.model.Product
 import org.koin.core.KoinComponent
+import org.koin.core.inject
 
 class GameViewModel : ViewModel(), KoinComponent {
 
+    private val repository: GameRepository by inject()
     private val posFirstCardFaceUp = MutableLiveData<Int>().apply { value = -1 }
     private val posSecondCardFaceUp = MutableLiveData<Int>().apply { value = -1 }
     var amountOfMoves = MutableLiveData<Int>().apply { value = 0 }
     val updateLayout = MutableLiveData<Boolean>().apply { value = false }
     var matchedCardCount = MutableLiveData<Int>().apply { value = 0 }
     val cards = MutableLiveData<MutableList<Card>>().apply { value = mutableListOf() }
-
-    private val repository by lazy {
-        GameRepository(GameDataSourceImp())
-    }
 
     private fun getImageList(products: List<Product>?): List<Image> {
         return products?.map { it.image!! } ?: listOf()

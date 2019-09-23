@@ -122,7 +122,7 @@ class GameFragment : Fragment() {
             starCounter++
         }
 
-        if (Game.amountOfMoves <= (Game.amountOfPairs * 4)) {
+        if (Game.amountOfMoves <= (Game.amountOfPairs * 6)) {
             starCounter++
         }
 
