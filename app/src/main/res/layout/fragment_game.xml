@@ -24,7 +24,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/smallMargin"
             android:layout_marginLeft="@dimen/smallMargin"
-            android:text="@string/placeholder_amount_moves"
             android:textColor="@color/white"
             android:textSize="@dimen/mediumTextSize"
             android:textStyle="bold"
@@ -33,7 +32,7 @@
             app:layout_constraintTop_toTopOf="@id/chronometer" />
 
         <TextView
-            android:id="@+id/ivScore"
+            android:id="@+id/tvScore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/smallMargin"
@@ -42,7 +41,6 @@
             android:drawableStart="@drawable/ic_trophy"
             android:drawableLeft="@drawable/ic_trophy"
             android:drawablePadding="@dimen/smallMargin"
-            android:text="@string/placeholder_score"
             android:textColor="@color/white"
             android:textSize="@dimen/mediumTextSize"
             android:textStyle="bold"

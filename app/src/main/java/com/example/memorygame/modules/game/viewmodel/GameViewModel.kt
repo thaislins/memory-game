@@ -53,8 +53,8 @@ class GameViewModel : ViewModel(), KoinComponent {
                 throw CardAlreadySelectedException()
             }
             // Checks if there already is one card up
+            amountOfMoves.value = amountOfMoves.value?.plus(1)
             if (!it[position].isMatched && posFirstCardFaceUp.value != -1) {
-                amountOfMoves.value?.plus(1)
                 posSecondCardFaceUp.value = position
                 it[position].isFaceUp = true
                 updateLayout.value = true
@@ -64,7 +64,6 @@ class GameViewModel : ViewModel(), KoinComponent {
                     checkIfCardsMatch()
                 }, 500)
             } else {
-                amountOfMoves.value = amountOfMoves.value?.plus(1)
                 posFirstCardFaceUp.value = position
                 it[position].isFaceUp = true
                 updateLayout.value = true

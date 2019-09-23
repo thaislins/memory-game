@@ -47,22 +47,20 @@ class GameFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         products = arguments?.getParcelableArrayList(resources.getString(R.string.key_product_list))
-        checkIfGameOver()
+        checkMatchedCardCount()
         startGame()
         setClickListener()
     }
 
     private fun startGame() {
-        updateAmountofMoves()
+        updateAmountOfMoves()
         binding.viewModel?.createCards(Game.amountOfPairs, products)
         gameViewModel?.cards?.observe(this, Observer {
-            if (it.isNotEmpty()) {
-                Handler().postDelayed({ hideCards(); startChronometer() }, 1200)
-            }
+            Handler().postDelayed({ startChronometer() }, 1200)
         })
     }
 
-    fun updateAmountofMoves() {
+    private fun updateAmountOfMoves() {
         gameViewModel?.amountOfMoves?.observe(this, Observer {
             tvAmountMoves.text = resources.getString(R.string.amount_moves, it)
         })
@@ -73,21 +71,15 @@ class GameFragment : Fragment() {
         chronometer.start()
     }
 
-    private fun hideCards() {
-        val adapter = binding.gridView.adapter as CardAdapter
-        cards.forEach { it.isFaceUp = false }
-        adapter.changedPositions = (0..cards.size).toSet()
-        adapter.notifyDataSetChanged()
-    }
-
     private fun updateGameLayout(adapter: CardAdapter) {
         gameViewModel?.updateLayout?.observe(this, Observer {
             if (it) adapter.notifyDataSetChanged()
         })
     }
 
-    private fun checkIfGameOver() {
+    private fun checkMatchedCardCount() {
         gameViewModel?.matchedCardCount?.observe(this, Observer {
+            tvScore.text = (it / 2).toString()
             if (it != 0 && it == cards.size) {
                 Game.gameOver = true
                 chronometer.stop()

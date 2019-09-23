@@ -6,7 +6,7 @@
     <string name="error_text">Unable to Load Game data</string>
 
     // Game Fragment
-    <string name="placeholder_score">20</string>
+    <string name="placeholder_score">0</string>
     <string name="placeholder_timer">1:30</string>
     <string name="placeholder_amount_moves">0 Moves</string>
     <string name="timer_value"> %1$d:%2$s</string>

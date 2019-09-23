@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ImageView
+import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.example.memorygame.R
 import com.example.memorygame.modules.game.model.Card
@@ -39,7 +40,7 @@ class CardAdapter(
         val card = cardList?.get(position)
         // Checks if card is face up or down to define its content
         if (card?.isMatched!!) {
-            hideCard()
+            //hideCard()
         } else {
             if (card.isFaceUp) {
                 if (changedPositions.contains(position)) {
@@ -62,14 +63,14 @@ class CardAdapter(
     }
 
     private fun showBack() {
-        holder.cardImagePhotoPath?.setImageDrawable(context.resources.getDrawable((R.drawable.ic_card_back)))
+        holder.cardImagePhotoPath?.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_card_back))
         holder.cardImagePhotoPath?.background =
-            context.resources.getDrawable((R.drawable.card_back))
+            ContextCompat.getDrawable(context, R.drawable.card_back)
     }
 
     private fun showFront(card: Card) {
         holder.cardImagePhotoPath?.let { Glide.with(context).load(card.image?.src).into(it) }
-        holder.cardImagePhotoPath?.background = context.resources.getDrawable(R.drawable.card_front)
+        holder.cardImagePhotoPath?.background = ContextCompat.getDrawable(context, R.drawable.card_front)
     }
 
     private fun flipAnimation(res: Int) {
