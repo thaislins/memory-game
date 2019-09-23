@@ -15,10 +15,10 @@ class GameViewModel : ViewModel(), KoinComponent {
 
     private val posFirstCardFaceUp = MutableLiveData<Int>().apply { value = -1 }
     private val posSecondCardFaceUp = MutableLiveData<Int>().apply { value = -1 }
+    var amountOfMoves = MutableLiveData<Int>().apply { value = 0 }
     val updateLayout = MutableLiveData<Boolean>().apply { value = false }
     var matchedCardCount = MutableLiveData<Int>().apply { value = 0 }
     val cards = MutableLiveData<MutableList<Card>>().apply { value = mutableListOf() }
-    private val delay: Long = 500
 
     private val repository by lazy {
         GameRepository(GameDataSourceImp())
@@ -31,6 +31,7 @@ class GameViewModel : ViewModel(), KoinComponent {
     private fun initializeValues() {
         Card.identifierFactory = 0
         matchedCardCount.value = 0
+        amountOfMoves.value = 0
         cards.value?.clear()
     }
 
@@ -53,6 +54,7 @@ class GameViewModel : ViewModel(), KoinComponent {
             }
             // Checks if there already is one card up
             if (!it[position].isMatched && posFirstCardFaceUp.value != -1) {
+                amountOfMoves.value = amountOfMoves.value?.plus(1)
                 posSecondCardFaceUp.value = position
                 it[position].isFaceUp = true
                 updateLayout.value = true
@@ -60,10 +62,9 @@ class GameViewModel : ViewModel(), KoinComponent {
                 Handler().postDelayed({
                     updateLayout.value = false
                     checkIfCardsMatch()
-                }, delay)
-
-                // Makes sure that if a card is clicked more than once that it can't match itself
+                }, 500)
             } else {
+                amountOfMoves.value = amountOfMoves.value?.plus(1)
                 posFirstCardFaceUp.value = position
                 it[position].isFaceUp = true
                 updateLayout.value = true

@@ -19,6 +19,7 @@
         android:background="@drawable/game_background">
 
         <TextView
+            android:id="@+id/tvAmountMoves"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/smallMargin"

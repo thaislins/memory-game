@@ -53,11 +53,18 @@ class GameFragment : Fragment() {
     }
 
     private fun startGame() {
+        updateAmountofMoves()
         binding.viewModel?.createCards(Game.amountOfPairs, products)
         gameViewModel?.cards?.observe(this, Observer {
             if (it.isNotEmpty()) {
                 Handler().postDelayed({ hideCards(); startChronometer() }, 1200)
             }
+        })
+    }
+
+    fun updateAmountofMoves() {
+        gameViewModel?.amountOfMoves?.observe(this, Observer {
+            tvAmountMoves.text = resources.getString(R.string.amount_moves, it)
         })
     }
 
