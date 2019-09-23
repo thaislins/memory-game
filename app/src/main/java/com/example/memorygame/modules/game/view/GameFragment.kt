@@ -81,7 +81,6 @@ class GameFragment : Fragment() {
         gameViewModel?.matchedCardCount?.observe(this, Observer {
             tvScore.text = (it / 2).toString()
             if (it != 0 && it == cards.size) {
-                Game.gameOver = true
                 chronometer.stop()
                 showEndGameDialog()
             }
@@ -112,7 +111,6 @@ class GameFragment : Fragment() {
             AdapterView.OnItemClickListener { _, _, position, _ ->
                 // Get the GridView selected/clicked item text
                 try {
-                    Game.gameOver = false
                     binding.viewModel?.chooseCard(position)
                     val adapter = binding.gridView.adapter as CardAdapter
                     adapter.changedPositions = setOf(position)

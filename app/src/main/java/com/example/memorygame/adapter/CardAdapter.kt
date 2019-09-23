@@ -11,7 +11,6 @@ import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.example.memorygame.R
 import com.example.memorygame.modules.game.model.Card
-import com.example.memorygame.modules.game.model.Game
 
 class CardAdapter(
     context: Context, private val resource: Int, private var cardList: MutableList<Card>?
@@ -23,7 +22,7 @@ class CardAdapter(
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         var convView = convertView
 
-        if (convertView == null || Game.gameOver) {
+        if (convertView == null) {
             convView = LayoutInflater.from(context).inflate(resource, null)
             holder = CardHolder()
             holder.cardImagePhotoPath = convView?.findViewById(R.id.ivCardGame)
@@ -39,9 +38,7 @@ class CardAdapter(
     private fun checksCard(position: Int) {
         val card = cardList?.get(position)
         // Checks if card is face up or down to define its content
-        if (card?.isMatched!!) {
-            //hideCard()
-        } else {
+        if (!card?.isMatched!!) {
             if (card.isFaceUp) {
                 if (changedPositions.contains(position)) {
                     flipAnimation(R.animator.card_flip_right_out)
@@ -58,19 +55,21 @@ class CardAdapter(
         }
     }
 
-    private fun hideCard() {
-        holder.cardImagePhotoPath?.visibility = View.INVISIBLE
-    }
-
     private fun showBack() {
-        holder.cardImagePhotoPath?.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_card_back))
+        holder.cardImagePhotoPath?.setImageDrawable(
+            ContextCompat.getDrawable(
+                context,
+                R.drawable.ic_card_back
+            )
+        )
         holder.cardImagePhotoPath?.background =
             ContextCompat.getDrawable(context, R.drawable.card_back)
     }
 
     private fun showFront(card: Card) {
         holder.cardImagePhotoPath?.let { Glide.with(context).load(card.image?.src).into(it) }
-        holder.cardImagePhotoPath?.background = ContextCompat.getDrawable(context, R.drawable.card_front)
+        holder.cardImagePhotoPath?.background =
+            ContextCompat.getDrawable(context, R.drawable.card_front)
     }
 
     private fun flipAnimation(res: Int) {

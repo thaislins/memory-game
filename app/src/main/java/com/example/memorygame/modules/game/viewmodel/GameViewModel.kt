@@ -80,9 +80,10 @@ class GameViewModel : ViewModel(), KoinComponent {
                 it[firstCardPos].isMatched = true
                 it[secondCardPos].isMatched = true
                 matchedCardCount.value = matchedCardCount.value?.plus(2)
+            } else {
+                it[firstCardPos].isFaceUp = false
+                it[secondCardPos].isFaceUp = false
             }
-            it[firstCardPos].isFaceUp = false
-            it[secondCardPos].isFaceUp = false
         }
 
         posFirstCardFaceUp.value = -1
