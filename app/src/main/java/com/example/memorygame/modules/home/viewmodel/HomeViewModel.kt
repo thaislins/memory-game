@@ -1,6 +1,5 @@
 package com.example.memorygame.modules.home.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -15,6 +14,7 @@ import org.koin.core.inject
 
 class HomeViewModel : ViewModel(), KoinComponent {
 
+    val error = MutableLiveData<Boolean>().apply { value = false }
     private val productApi: ProductApi? by inject()
 
     private val repository by lazy {
@@ -29,11 +29,12 @@ class HomeViewModel : ViewModel(), KoinComponent {
      *
      */
     fun loadProducts() {
+        error.value = false
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 products.postValue(repository.loadAll() as ArrayList<Product>?)
             } catch (ex: Exception) {
-                Log.e("Error", ex.stackTrace.toString())
+                error.postValue(true)
             }
         }
     }

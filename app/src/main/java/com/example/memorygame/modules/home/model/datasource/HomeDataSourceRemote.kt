@@ -1,9 +1,9 @@
 package com.example.memorygame.modules.home.model.datasource
 
-import android.util.Log
-import com.example.memorygame.modules.home.model.Product
 import com.example.memorygame.BuildConfig.ACCESS_TOKEN
 import com.example.memorygame.data.ProductService
+import com.example.memorygame.exceptions.UnableToLoadImagesException
+import com.example.memorygame.modules.home.model.Product
 
 class HomeDataSourceRemote(private val productService: ProductService?) : HomeDataSource {
 
@@ -14,12 +14,10 @@ class HomeDataSourceRemote(private val productService: ProductService?) : HomeDa
             if (response != null) {
                 response.products
             } else {
-                Log.e("Error", "Error")
-                null
+                throw UnableToLoadImagesException()
             }
         } catch (ex: Exception) {
-            Log.e("Error", ex.message)
-            null
+            throw UnableToLoadImagesException()
         }
     }
 }

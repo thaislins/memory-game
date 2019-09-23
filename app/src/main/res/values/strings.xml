@@ -3,6 +3,7 @@
     // Menu Fragment
     <string name="app_name">Memory Game</string>
     <string name="play">Play</string>
+    <string name="error_text">Unable to Load Game data</string>
 
     // Game Fragment
     <string name="placeholder_score">20</string>

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.view.animation.AlphaAnimation
 import android.view.animation.AnimationSet
 import android.view.animation.DecelerateInterpolator
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -34,6 +35,7 @@ class HomeFragment : Fragment() {
         fadeIn()
         homeViewModel.loadProducts()
         goToGameFragment()
+        createErrorDialog()
     }
 
     private fun fadeIn() {
@@ -57,6 +59,26 @@ class HomeFragment : Fragment() {
             if (it != null) {
                 pbLoadProducts.visibility = View.GONE
                 btnPlay.visibility = View.VISIBLE
+            }
+        })
+    }
+
+    fun createErrorDialog() {
+        homeViewModel.error.observe(this, Observer {
+            if (it) {
+                val dialogBuilder = activity?.let { AlertDialog.Builder(it) }
+                val inflater = this.layoutInflater
+                val dialogView = inflater.inflate(R.layout.error_dialog, null)
+                dialogBuilder?.setView(dialogView)
+                dialogBuilder?.setCancelable(false);
+
+                dialogBuilder?.setPositiveButton("RETRY") { _, _ ->
+                    homeViewModel.loadProducts()
+                    goToGameFragment()
+                }
+
+                val alertDialog = dialogBuilder?.create()
+                alertDialog?.show()
             }
         })
     }
