@@ -15,7 +15,6 @@
 
     // End Game Dialog
     <string name="placeholder_message">Well Done</string>
-    <string name="placeholder_total_score">15</string>
     <string name="quit_button_text">Quit</string>
     <string name="retry_button_text">Restart</string>
 </resources>

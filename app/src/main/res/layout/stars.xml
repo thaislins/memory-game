@@ -5,28 +5,29 @@
     android:layout_height="wrap_content">
 
     <ImageView
-        android:id="@+id/starOne"
+        android:id="@+id/ivStarOne"
         android:layout_width="@dimen/smallSize"
         android:layout_height="@dimen/smallSize"
-        android:src="@drawable/ic_star"
-        app:layout_constraintLeft_toLeftOf="parent"
+        android:src="@drawable/ic_star_red"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <ImageView
+        android:id="@+id/ivStarThree"
+        android:layout_width="@dimen/mediumSize"
+        android:layout_height="@dimen/mediumSize"
+        android:src="@drawable/ic_star_gray"
+        app:layout_constraintLeft_toRightOf="@id/ivStarOne"
+        app:layout_constraintRight_toLeftOf="@id/ivStarTwo"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
+        android:id="@+id/ivStarTwo"
         android:layout_width="@dimen/smallSize"
         android:layout_height="@dimen/smallSize"
-        android:src="@drawable/ic_star"
-        app:layout_constraintLeft_toRightOf="@id/starOne"
-        app:layout_constraintRight_toLeftOf="@id/starThree"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/starThree"
-        android:layout_width="@dimen/smallSize"
-        android:layout_height="@dimen/smallSize"
-        android:src="@drawable/ic_star"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:src="@drawable/ic_star_gray"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

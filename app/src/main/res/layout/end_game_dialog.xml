@@ -27,11 +27,12 @@
             android:textSize="@dimen/largeTextSize" />
 
         <TextView
+            android:id="@+id/tvTotalAmountMatched"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/smallMargin"
             android:drawableLeft="@drawable/ic_trophy"
             android:fontFamily="@font/carter_one"
-            android:text="@string/placeholder_total_score"
             android:textAllCaps="true"
             android:textColor="#ffffff" />
 

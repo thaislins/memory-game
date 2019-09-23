@@ -7,7 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -62,6 +65,7 @@ class GameFragment : Fragment() {
 
     private fun updateAmountOfMoves() {
         gameViewModel?.amountOfMoves?.observe(this, Observer {
+            Game.amountOfMoves = it
             tvAmountMoves.text = resources.getString(R.string.amount_moves, it)
         })
     }
@@ -82,15 +86,14 @@ class GameFragment : Fragment() {
             tvScore.text = (it / 2).toString()
             if (it != 0 && it == cards.size) {
                 chronometer.stop()
-                showEndGameDialog()
+                showEndGameDialog(it / 2)
             }
         })
     }
 
-    private fun showEndGameDialog() {
+    private fun showEndGameDialog(amountOfPairsMatched: Int) {
         val dialogBuilder = activity?.let { AlertDialog.Builder(it) }
-        val inflater = this.layoutInflater
-        val dialogView = inflater.inflate(R.layout.end_game_dialog, null)
+        val dialogView = View.inflate(context, R.layout.end_game_dialog, null);
         dialogBuilder?.setView(dialogView)
         dialogBuilder?.setCancelable(false);
 
@@ -98,12 +101,37 @@ class GameFragment : Fragment() {
             NavHostFragment.findNavController(this).navigate(R.id.backToMenuFragment)
         }
 
-        dialogBuilder?.setPositiveButton("RESTART", { _, _ ->
+        dialogBuilder?.setPositiveButton("RESTART") { _, _ ->
             startGame()
-        })
+        }
 
         val alertDialog = dialogBuilder?.create()
         alertDialog?.show()
+        val starTwo = alertDialog?.findViewById<ImageView>(R.id.ivStarTwo)
+        val starThree = alertDialog?.findViewById<ImageView>(R.id.ivStarThree)
+        showStars(starTwo, starThree)
+        val tvAmountPairsMatched: TextView? =
+            alertDialog?.findViewById<TextView>(R.id.tvTotalAmountMatched)
+        tvAmountPairsMatched?.text = amountOfPairsMatched.toString()
+    }
+
+    private fun showStars(starTwo: ImageView?, starThree: ImageView?) {
+        var starCounter = 0
+
+        if (SystemClock.elapsedRealtime() - chronometer.getBase() <= 150000) {
+            starCounter++
+        }
+
+        if (Game.amountOfMoves <= (Game.amountOfPairs * 4)) {
+            starCounter++
+        }
+
+        if (starCounter == 1)  {
+            starTwo?.setImageDrawable(ContextCompat.getDrawable(activity?.applicationContext!!, R.drawable.ic_star_red))
+        } else if (starCounter == 2) {
+            starTwo?.setImageDrawable(ContextCompat.getDrawable(activity?.applicationContext!!, R.drawable.ic_star_red))
+            starThree?.setImageDrawable(ContextCompat.getDrawable(activity?.applicationContext!!, R.drawable.ic_star_red))
+        }
     }
 
     private fun setClickListener() {
@@ -114,7 +142,6 @@ class GameFragment : Fragment() {
                     binding.viewModel?.chooseCard(position)
                     val adapter = binding.gridView.adapter as CardAdapter
                     adapter.changedPositions = setOf(position)
-
                     updateGameLayout(adapter)
                 } catch (e: CardAlreadySelectedException) {
                     // Do not do anything when re-selecting an already selected card
