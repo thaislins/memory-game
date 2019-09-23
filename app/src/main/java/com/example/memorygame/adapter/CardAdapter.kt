@@ -8,11 +8,12 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import com.bumptech.glide.Glide
-import com.example.memorygame.modules.game.model.Card
 import com.example.memorygame.R
+import com.example.memorygame.modules.game.model.Card
+import com.example.memorygame.modules.game.model.Game
 
 class CardAdapter(
-    context: Context, private val resource: Int, private val cardList: MutableList<Card>?
+    context: Context, private val resource: Int, private var cardList: MutableList<Card>?
 ) : ArrayAdapter<CardAdapter.CardHolder>(context, resource), AdapterItemsContract {
 
     private lateinit var holder: CardHolder
@@ -21,7 +22,7 @@ class CardAdapter(
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         var convView = convertView
 
-        if (convertView == null) {
+        if (convertView == null || Game.gameOver) {
             convView = LayoutInflater.from(context).inflate(resource, null)
             holder = CardHolder()
             holder.cardImagePhotoPath = convView?.findViewById(R.id.ivCardGame)
@@ -77,8 +78,9 @@ class CardAdapter(
         flip.start()
     }
 
-    override fun replaceItems(list: List<*>) {
-        cardList?.addAll(list as List<Card>)
+    override fun replaceItems(list: MutableList<Card>) {
+        cardList?.clear()
+        cardList?.addAll(list)
         notifyDataSetChanged()
     }
 

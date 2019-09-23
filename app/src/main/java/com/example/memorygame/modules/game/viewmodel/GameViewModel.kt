@@ -17,8 +17,8 @@ class GameViewModel : ViewModel(), KoinComponent {
     private val posSecondCardFaceUp = MutableLiveData<Int>().apply { value = -1 }
     val updateLayout = MutableLiveData<Boolean>().apply { value = false }
     var matchedCardCount = MutableLiveData<Int>().apply { value = 0 }
+    val cards = MutableLiveData<MutableList<Card>>().apply { value = mutableListOf() }
     private val delay: Long = 500
-    val cards = MutableLiveData<List<Card>>().apply { value = emptyList() }
 
     private val repository by lazy {
         GameRepository(GameDataSourceImp())
@@ -28,10 +28,17 @@ class GameViewModel : ViewModel(), KoinComponent {
         return products?.map { it.image!! } ?: listOf()
     }
 
-    fun createCards(pairs: Int, amountMatches: Int, products: List<Product>?) {
+    private fun initializeValues() {
+        Card.identifierFactory = 0
+        matchedCardCount.value = 0
+        cards.value?.clear()
+    }
+
+    fun createCards(amountOfPairs: Int, products: List<Product>?) {
+        initializeValues()
         var images = getImageList(products)
-        images = images.shuffled().take(pairs)
-        cards.value = repository.showCards(pairs, amountMatches, images)
+        images = images.shuffled().take(amountOfPairs)
+        cards.value = repository.showCards(amountOfPairs, images)
     }
 
     fun chooseCard(position: Int) {

@@ -1,7 +1,7 @@
 package com.example.memorygame.modules.game.model
 
-class Game {
-    var pairs = 5
+object Game {
+    var amountOfPairs = 2
     var gameOver = false
     var score = 0
 }

@@ -11,7 +11,7 @@ data class Card(
     constructor() : this(getUniqueId(), true, false, null)
 
     companion object {
-        private var identifierFactory: Int = 0
+        var identifierFactory: Int = 0
 
         private fun getUniqueId(): Int {
             identifierFactory += 1
