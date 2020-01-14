@@ -5,7 +5,6 @@
     tools:context=".modules.game.view.GameFragment">
 
     <data>
-
         <variable
             name="viewModel"
             type="com.example.memorygame.modules.game.viewmodel.GameViewModel" />

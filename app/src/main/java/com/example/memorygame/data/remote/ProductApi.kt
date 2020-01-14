@@ -1,4 +1,4 @@
-package com.example.memorygame.data
+package com.example.memorygame.data.remote
 
 import com.example.memorygame.BuildConfig.BASE_URL
 import okhttp3.OkHttpClient
