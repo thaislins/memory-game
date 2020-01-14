@@ -1,20 +1,29 @@
 <resources>
 
-    // Menu Fragment
+    <!-- App -->
     <string name="app_name">Memory Game</string>
-    <string name="play">Play</string>
-    <string name="error_text">Unable to Load Game data</string>
+    <string name="app_preferences_amount_pairs">Memory Game</string>
 
-    // Game Fragment
-    <string name="placeholder_score">0</string>
-    <string name="placeholder_timer">1:30</string>
-    <string name="placeholder_amount_moves">0 Moves</string>
-    <string name="timer_value"> %1$d:%2$s</string>
-    <string name="key_product_list">key_product_list</string>
-    <string name="amount_moves">%1$d Moves</string>
+    <!-- Home Fragment -->
+    <string name="home_fragment_play">Play</string>
+    <string name="home_fragment_options">Options</string>
+    <string name="home_fragment_scores">Scores</string>
+    <string name="home_fragment_error_text">Unable to Load Game data</string>
 
-    // End Game Dialog
-    <string name="placeholder_message">Well Done</string>
-    <string name="quit_button_text">Quit</string>
-    <string name="retry_button_text">Restart</string>
+    <!-- Game Fragment -->
+    <string name="game_fragment_placeholder_score">0</string>
+    <string name="game_fragment_placeholder_timer">1:30</string>
+    <string name="game_fragment_placeholder_amount_moves">0 Moves</string>
+    <string name="game_fragment_timer_value"> %1$d:%2$s</string>
+    <string name="game_fragment_key_product_list">key_product_list</string>
+    <string name="game_fragment_amount_moves">%1$d Moves</string>
+
+    <!-- End Game Dialog -->
+    <string name="end_dialog_placeholder_message">Well Done</string>
+    <string name="end_dialog_quit_button_text">Quit</string>
+    <string name="end_dialog_retry_button_text">Restart</string>
+
+    <!-- Options Fragment -->
+    <string name="options_fragment">Options</string>
+    <string name="options_fragment_amount_pairs">Amount of pairs to match</string>
 </resources>

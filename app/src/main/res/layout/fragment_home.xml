@@ -39,21 +39,49 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="@id/tvName"
         app:layout_constraintRight_toRightOf="@id/tvName"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btnPlay"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/largeMargin"
-        android:background="@drawable/round_button"
-        android:text="@string/play"
+        android:background="@drawable/round_button_green"
         android:fontFamily="@font/carter_one"
+        android:text="@string/home_fragment_play"
         android:textColor="@color/white"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="@id/ivLogo"
+        app:layout_constraintRight_toRightOf="@id/ivLogo"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnOptions"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/largeMargin"
+        android:background="@drawable/round_button_blue"
+        android:fontFamily="@font/carter_one"
+        android:text="@string/home_fragment_options"
+        android:textColor="@color/white"
+        android:visibility="invisible"
         app:layout_constraintLeft_toLeftOf="@id/tvName"
         app:layout_constraintRight_toRightOf="@id/tvName"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/btnPlay" />
+
+    <Button
+        android:id="@+id/btnScores"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/largeMargin"
+        android:background="@drawable/round_button_blue"
+        android:fontFamily="@font/carter_one"
+        android:text="@string/home_fragment_scores"
+        android:textColor="@color/white"
+        android:visibility="invisible"
+        app:layout_constraintLeft_toLeftOf="@id/tvName"
+        app:layout_constraintRight_toRightOf="@id/tvName"
+        app:layout_constraintTop_toBottomOf="@id/btnOptions" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

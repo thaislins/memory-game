@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/largeMargin"
             android:fontFamily="@font/carter_one"
-            android:text="@string/placeholder_message"
+            android:text="@string/end_dialog_placeholder_message"
             android:textAllCaps="true"
             android:textColor="#ffffff"
             android:textSize="@dimen/largeTextSize" />

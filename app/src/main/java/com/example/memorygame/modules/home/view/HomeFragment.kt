@@ -35,6 +35,8 @@ class HomeFragment : Fragment() {
         fadeIn()
         homeViewModel.loadProducts()
         goToGameFragment()
+        goToOptionsFragment()
+        observeProductList()
         createErrorDialog()
     }
 
@@ -48,8 +50,19 @@ class HomeFragment : Fragment() {
         view?.animation = animation
     }
 
+    private fun observeProductList() {
+        homeViewModel.products.observe(viewLifecycleOwner, Observer {
+            if (it != null) {
+                pbLoadProducts.visibility = View.GONE
+                btnPlay.visibility = View.VISIBLE
+                btnOptions.visibility = View.VISIBLE
+                btnScores.visibility = View.VISIBLE
+            }
+        })
+    }
+
     /**
-     * Shows Play button only when products are loaded and sets button click lis†ener to start game
+     * Sets play button click lis†ener to start game
      *
      */
     private fun goToGameFragment() {
@@ -58,13 +71,12 @@ class HomeFragment : Fragment() {
             bundle.putParcelableArrayList("key_product_list", homeViewModel.products.value)
             view?.findNavController()?.navigate(R.id.toGameFragment, bundle)
         }
+    }
 
-        homeViewModel.products.observe(this, Observer {
-            if (it != null) {
-                pbLoadProducts.visibility = View.GONE
-                btnPlay.visibility = View.VISIBLE
-            }
-        })
+    private fun goToOptionsFragment() {
+        btnOptions.setOnClickListener {
+            view?.findNavController()?.navigate(R.id.toOptionsFragment)
+        }
     }
 
     /**
@@ -72,7 +84,7 @@ class HomeFragment : Fragment() {
      *
      */
     fun createErrorDialog() {
-        homeViewModel.error.observe(this, Observer {
+        homeViewModel.error.observe(viewLifecycleOwner, Observer {
             if (it) {
                 val dialogBuilder = activity?.let { AlertDialog.Builder(it) }
                 val inflater = this.layoutInflater

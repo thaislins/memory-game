@@ -3,6 +3,7 @@ package com.example.memorygame.modules.game.view
 import android.os.Bundle
 import android.os.Handler
 import android.os.SystemClock
+import android.preference.PreferenceManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,7 @@ import android.widget.AdapterView
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -49,7 +51,9 @@ class GameFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        products = arguments?.getParcelableArrayList(resources.getString(R.string.key_product_list))
+        (activity as AppCompatActivity).supportActionBar!!.hide()
+        products =
+            arguments?.getParcelableArrayList(resources.getString(R.string.game_fragment_key_product_list))
         observeMatchedCardCount()
         startGame()
         setClickListener()
@@ -57,16 +61,24 @@ class GameFragment : Fragment() {
 
     private fun startGame() {
         updateAmountOfMoves()
+        setAmountOfPairs()
         binding.viewModel?.createCards(Game.amountOfPairs, products)
-        gameViewModel?.cards?.observe(this, Observer {
+        gameViewModel?.cards?.observe(viewLifecycleOwner, Observer {
             Handler().postDelayed({ startChronometer() }, 1200)
         })
     }
 
+    fun setAmountOfPairs() {
+        Game.amountOfPairs = PreferenceManager.getDefaultSharedPreferences(context).getInt(
+            resources.getString(R.string.app_preferences_amount_pairs),
+            10
+        );
+    }
+
     private fun updateAmountOfMoves() {
-        gameViewModel?.amountOfMoves?.observe(this, Observer {
+        gameViewModel?.amountOfMoves?.observe(viewLifecycleOwner, Observer {
             Game.amountOfMoves = it
-            tvAmountMoves.text = resources.getString(R.string.amount_moves, it)
+            tvAmountMoves.text = resources.getString(R.string.game_fragment_amount_moves, it)
         })
     }
 
@@ -76,7 +88,7 @@ class GameFragment : Fragment() {
     }
 
     private fun updateGameLayout(adapter: CardAdapter) {
-        gameViewModel?.updateLayout?.observe(this, Observer {
+        gameViewModel?.updateLayout?.observe(viewLifecycleOwner, Observer {
             if (it) adapter.notifyDataSetChanged()
         })
     }
@@ -86,7 +98,7 @@ class GameFragment : Fragment() {
      *
      */
     private fun observeMatchedCardCount() {
-        gameViewModel?.matchedCardCount?.observe(this, Observer {
+        gameViewModel?.matchedCardCount?.observe(viewLifecycleOwner, Observer {
             tvScore.text = (it / 2).toString()
             if (it != 0 && it == cards.size) {
                 chronometer.stop()
@@ -138,14 +150,33 @@ class GameFragment : Fragment() {
             starCounter++
         }
 
-        if (starCounter == 1)  {
-            starTwo?.setImageDrawable(ContextCompat.getDrawable(activity?.applicationContext!!, R.drawable.ic_star_red))
+        if (starCounter == 1) {
+            starTwo?.setImageDrawable(
+                ContextCompat.getDrawable(
+                    activity?.applicationContext!!,
+                    R.drawable.ic_star_red
+                )
+            )
         } else if (starCounter == 2) {
-            starTwo?.setImageDrawable(ContextCompat.getDrawable(activity?.applicationContext!!, R.drawable.ic_star_red))
-            starThree?.setImageDrawable(ContextCompat.getDrawable(activity?.applicationContext!!, R.drawable.ic_star_red))
+            starTwo?.setImageDrawable(
+                ContextCompat.getDrawable(
+                    activity?.applicationContext!!,
+                    R.drawable.ic_star_red
+                )
+            )
+            starThree?.setImageDrawable(
+                ContextCompat.getDrawable(
+                    activity?.applicationContext!!,
+                    R.drawable.ic_star_red
+                )
+            )
         }
     }
 
+    /**
+     * Set a click listener for the cards
+     *
+     */
     private fun setClickListener() {
         binding.gridView.onItemClickListener =
             AdapterView.OnItemClickListener { _, _, position, _ ->

@@ -22,7 +22,7 @@ class GameViewModel : ViewModel(), KoinComponent {
     val cards = MutableLiveData<MutableList<Card>>().apply { value = mutableListOf() }
 
     private fun getImageList(products: List<Product>?): List<Image> {
-        return products?.map { it.image!! } ?: listOf()
+        return products?.map { it.image } as List<Image>? ?: listOf()
     }
 
     private fun initializeValues() {
@@ -32,6 +32,10 @@ class GameViewModel : ViewModel(), KoinComponent {
         cards.value?.clear()
     }
 
+    /**
+     * Create card layout and shuffle them
+     *
+     */
     fun createCards(amountOfPairs: Int, products: List<Product>?) {
         initializeValues()
         var images = getImageList(products)

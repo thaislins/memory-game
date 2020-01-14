@@ -5,6 +5,7 @@
     tools:context=".modules.game.view.GameFragment">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.example.memorygame.modules.game.viewmodel.GameViewModel" />
@@ -73,9 +74,12 @@
 
         <GridView
             android:id="@+id/gridView"
+            android:fastScrollEnabled="true"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/smallMargin"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/mediumMargin"
+            android:layout_marginTop="40dp"
+            android:layout_marginRight="@dimen/mediumMargin"
             android:gravity="center"
             android:horizontalSpacing="@dimen/mediumMargin"
             android:listSelector="@android:color/transparent"
@@ -85,7 +89,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/chronometer"
             tools:listitem="@layout/item_card" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
