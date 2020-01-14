@@ -50,7 +50,7 @@ class GameFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         products = arguments?.getParcelableArrayList(resources.getString(R.string.key_product_list))
-        checkMatchedCardCount()
+        observeMatchedCardCount()
         startGame()
         setClickListener()
     }
@@ -81,7 +81,11 @@ class GameFragment : Fragment() {
         })
     }
 
-    private fun checkMatchedCardCount() {
+    /**
+     * Ends game in case all cards are matched
+     *
+     */
+    private fun observeMatchedCardCount() {
         gameViewModel?.matchedCardCount?.observe(this, Observer {
             tvScore.text = (it / 2).toString()
             if (it != 0 && it == cards.size) {
@@ -91,6 +95,10 @@ class GameFragment : Fragment() {
         })
     }
 
+    /**
+     * Shows dialog at end of game that gives quit or restart option
+     *
+     */
     private fun showEndGameDialog(amountOfPairsMatched: Int) {
         val dialogBuilder = activity?.let { AlertDialog.Builder(it) }
         val dialogView = View.inflate(context, R.layout.end_game_dialog, null);
@@ -115,6 +123,10 @@ class GameFragment : Fragment() {
         tvAmountPairsMatched?.text = amountOfPairsMatched.toString()
     }
 
+    /**
+     * Shows amount of starts player obtained in game
+     *
+     */
     private fun showStars(starTwo: ImageView?, starThree: ImageView?) {
         var starCounter = 0
 

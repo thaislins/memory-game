@@ -18,7 +18,7 @@ class HomeViewModel : ViewModel(), KoinComponent {
 
     /**
      * This method launches a coroutine to make an
-     * API request
+     * API request that loads a list of products from Shopify Products API
      *
      */
     fun loadProducts() {

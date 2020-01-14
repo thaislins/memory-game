@@ -7,8 +7,8 @@
     <fragment
         android:id="@+id/menuFragment"
         android:name="com.example.memorygame.modules.home.view.HomeFragment"
-        android:label="fragment_menu"
-        tools:layout="@layout/fragment_menu">
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/toGameFragment"
             app:destination="@id/gameFragment"

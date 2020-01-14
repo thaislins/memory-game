@@ -31,7 +31,7 @@ android {
         def ACCESS_TOKEN = "ACCESS_TOKEN"
 
         debug {
-            buildConfigField "String", "BASE_URL", '"https://shopicruit.myshopify.com/"'
+            buildConfigField "String", "BASE_URL", '"https://shopicruit.myshopify.com"'
             buildConfigField "String", "ACCESS_TOKEN", '"c32313df0d0ef512ca64d5b336a0d7c6"'
         }
 

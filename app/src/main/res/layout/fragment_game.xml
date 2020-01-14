@@ -38,7 +38,7 @@
             android:layout_marginTop="@dimen/smallMargin"
             android:layout_marginEnd="@dimen/smallMargin"
             android:layout_marginRight="@dimen/smallMargin"
-            android:drawableStart="@drawable/ic_trophy"
+            android:drawableStart="@drawable/match"
             android:drawableLeft="@drawable/ic_trophy"
             android:drawablePadding="@dimen/smallMargin"
             android:textColor="@color/white"

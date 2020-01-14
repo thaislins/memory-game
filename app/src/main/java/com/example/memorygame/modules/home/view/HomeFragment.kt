@@ -14,7 +14,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import com.example.memorygame.R
 import com.example.memorygame.modules.home.viewmodel.HomeViewModel
-import kotlinx.android.synthetic.main.fragment_menu.*
+import kotlinx.android.synthetic.main.fragment_home.*
 import org.koin.android.ext.android.inject
 
 class HomeFragment : Fragment() {
@@ -25,7 +25,7 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_menu, container, false)
+        return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -48,6 +48,10 @@ class HomeFragment : Fragment() {
         view?.animation = animation
     }
 
+    /**
+     * Shows Play button only when products are loaded and sets button click lis†ener to start game
+     *
+     */
     private fun goToGameFragment() {
         btnPlay.setOnClickListener {
             val bundle = Bundle()
@@ -63,6 +67,10 @@ class HomeFragment : Fragment() {
         })
     }
 
+    /**
+     * Shows error dialog when products cannot be loaded
+     *
+     */
     fun createErrorDialog() {
         homeViewModel.error.observe(this, Observer {
             if (it) {
