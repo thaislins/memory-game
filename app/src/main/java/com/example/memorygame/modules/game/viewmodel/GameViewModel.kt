@@ -10,12 +10,14 @@ import com.example.memorygame.modules.home.model.Image
 import com.example.memorygame.modules.home.model.Product
 import org.koin.core.KoinComponent
 import org.koin.core.inject
+import java.util.*
+
 
 class GameViewModel : ViewModel(), KoinComponent {
 
     private val repository: GameRepository by inject()
-    private val posFirstCardFaceUp = MutableLiveData<Int>().apply { value = -1 }
-    private val posSecondCardFaceUp = MutableLiveData<Int>().apply { value = -1 }
+    val amountOfSets = 2
+    val cardsFaceUp = MutableLiveData<HashMap<Int, Card>>().apply { value = hashMapOf() }
     var amountOfMoves = MutableLiveData<Int>().apply { value = 0 }
     val updateLayout = MutableLiveData<Boolean>().apply { value = false }
     var matchedCardCount = MutableLiveData<Int>().apply { value = 0 }
@@ -43,52 +45,65 @@ class GameViewModel : ViewModel(), KoinComponent {
         cards.value = repository.showCards(amountOfPairs, images)
     }
 
+    /**
+     * Shuffles cards when button is clicked
+     *
+     */
+    fun shuffleCards() {
+        val newCards = cards.value!!
+        newCards.shuffle()
+        cards.value = newCards
+    }
+
     fun chooseCard(position: Int) {
-        // Makes sure you cannot select the same card twice and when two cards are clicked a third can't be clicked
-        if (position == posFirstCardFaceUp.value || posSecondCardFaceUp.value != -1) {
+        if (cardsFaceUp.value?.containsKey(position)!!) { // Makes sure you cannot select the same card twice and when two cards are clicked a third can't be clicked
             throw CardAlreadySelectedException()
         }
-        cards.value?.also {
-            // Makes sure you cannot select an already matched card
-            if (it[position].isMatched) {
-                throw CardAlreadySelectedException()
-            }
-            // Checks if there already is one card up
-            amountOfMoves.value = amountOfMoves.value?.plus(1)
-            if (!it[position].isMatched && posFirstCardFaceUp.value != -1) {
-                posSecondCardFaceUp.value = position
-                it[position].isFaceUp = true
-                updateLayout.value = true
 
-                Handler().postDelayed({
-                    updateLayout.value = false
-                    checkIfCardsMatch()
-                }, 500)
+        cards.value?.also {
+            if (it[position].isMatched) { // Makes sure a matched card cannot be selected
+                throw CardAlreadySelectedException()
             } else {
-                posFirstCardFaceUp.value = position
-                it[position].isFaceUp = true
-                updateLayout.value = true
+                //amountOfMoves.value = amountOfMoves.value?.plus(1)
+                if (cardsFaceUp.value?.size!! >= 0 && cardsFaceUp.value!!.size < amountOfSets) {
+                    it[position].isFaceUp = true
+                    cardsFaceUp.value?.put(position, it[position])
+                    updateLayout.value = true
+
+                    if (cardsFaceUp.value?.size == amountOfSets) {
+                        Handler().postDelayed({
+                            updateLayout.value = false
+                            checkIfCardsMatch()
+                        }, 500)
+                    }
+                }
             }
         }
     }
 
     private fun checkIfCardsMatch() {
-        val firstCardPos = posFirstCardFaceUp.value!!
-        val secondCardPos = posSecondCardFaceUp.value!!
+        val entry = cardsFaceUp.value?.entries?.iterator()?.next()
+        var cardsMatch = true
 
-        cards.value?.also {
-            if (it[firstCardPos].id == it[secondCardPos].id) {
-                it[firstCardPos].isMatched = true
-                it[secondCardPos].isMatched = true
-                matchedCardCount.value = matchedCardCount.value?.plus(2)
-            } else {
-                it[firstCardPos].isFaceUp = false
-                it[secondCardPos].isFaceUp = false
+        for (s in cardsFaceUp.value?.values!!) {
+            if (!s.id.equals(entry?.value?.id)) {
+                cardsMatch = false
             }
         }
 
-        posFirstCardFaceUp.value = -1
-        posSecondCardFaceUp.value = -1
+        cards.value?.also {
+            for ((key, value) in cardsFaceUp.value!!) {
+                if (cardsMatch) {
+                    it[key].isMatched = true
+                    matchedCardCount.value = matchedCardCount.value?.plus(1)
+                } else {
+                    it[key].isFaceUp = false
+                }
+            }
+
+        }
+
+        cardsFaceUp.value?.clear()
         updateLayout.value = true
     }
 }

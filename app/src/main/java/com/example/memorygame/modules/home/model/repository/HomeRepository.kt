@@ -15,6 +15,12 @@ class HomeRepository(
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
+    /**
+     * Makes a request to the app database to get list of products,
+     * if response is null then a request to the API will made to obtain
+     * a list of products
+     *
+     */
     override suspend fun loadAll(): List<Product>? {
         val dbRequest = localDataSource.loadAll()
 

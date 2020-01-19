@@ -15,7 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import com.example.memorygame.R
 import com.example.memorygame.adapter.CardAdapter
@@ -34,7 +34,7 @@ class GameFragment : Fragment() {
     private var products: ArrayList<Product>? = null
     private lateinit var binding: FragmentGameBinding
     private val gameViewModel: GameViewModel? by lazy {
-        ViewModelProviders.of(this).get(GameViewModel::class.java)
+        ViewModelProvider(this).get(GameViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -60,7 +60,6 @@ class GameFragment : Fragment() {
     }
 
     private fun startGame() {
-        updateAmountOfMoves()
         setAmountOfPairs()
         binding.viewModel?.createCards(Game.amountOfPairs, products)
         gameViewModel?.cards?.observe(viewLifecycleOwner, Observer {
@@ -75,18 +74,19 @@ class GameFragment : Fragment() {
         );
     }
 
-    private fun updateAmountOfMoves() {
-        gameViewModel?.amountOfMoves?.observe(viewLifecycleOwner, Observer {
-            Game.amountOfMoves = it
-            tvAmountMoves.text = resources.getString(R.string.game_fragment_amount_moves, it)
-        })
-    }
-
+    /**
+     * Starts game chronometer
+     *
+     */
     private fun startChronometer() {
         chronometer.setBase(SystemClock.elapsedRealtime());
         chronometer.start()
     }
 
+    /**
+     * Notifies adapter of changes when game layout is updated
+     *
+     */
     private fun updateGameLayout(adapter: CardAdapter) {
         gameViewModel?.updateLayout?.observe(viewLifecycleOwner, Observer {
             if (it) adapter.notifyDataSetChanged()
@@ -99,40 +99,11 @@ class GameFragment : Fragment() {
      */
     private fun observeMatchedCardCount() {
         gameViewModel?.matchedCardCount?.observe(viewLifecycleOwner, Observer {
-            tvScore.text = (it / 2).toString()
             if (it != 0 && it == cards.size) {
                 chronometer.stop()
                 showEndGameDialog(it / 2)
             }
         })
-    }
-
-    /**
-     * Shows dialog at end of game that gives quit or restart option
-     *
-     */
-    private fun showEndGameDialog(amountOfPairsMatched: Int) {
-        val dialogBuilder = activity?.let { AlertDialog.Builder(it) }
-        val dialogView = View.inflate(context, R.layout.end_game_dialog, null);
-        dialogBuilder?.setView(dialogView)
-        dialogBuilder?.setCancelable(false);
-
-        dialogBuilder?.setNegativeButton("QUIT") { _, _ ->
-            NavHostFragment.findNavController(this).navigate(R.id.backToMenuFragment)
-        }
-
-        dialogBuilder?.setPositiveButton("RESTART") { _, _ ->
-            startGame()
-        }
-
-        val alertDialog = dialogBuilder?.create()
-        alertDialog?.show()
-        val starTwo = alertDialog?.findViewById<ImageView>(R.id.ivStarTwo)
-        val starThree = alertDialog?.findViewById<ImageView>(R.id.ivStarThree)
-        showStars(starTwo, starThree)
-        val tvAmountPairsMatched: TextView? =
-            alertDialog?.findViewById<TextView>(R.id.tvTotalAmountMatched)
-        tvAmountPairsMatched?.text = amountOfPairsMatched.toString()
     }
 
     /**
@@ -174,7 +145,7 @@ class GameFragment : Fragment() {
     }
 
     /**
-     * Set a click listener for the cards
+     * Set a click listener for the cards and shuffle button
      *
      */
     private fun setClickListener() {
@@ -190,5 +161,33 @@ class GameFragment : Fragment() {
                     // Do not do anything when re-selecting an already selected card
                 }
             }
+    }
+
+    /**
+     * Shows dialog at end of game that gives quit or restart option
+     *
+     */
+    private fun showEndGameDialog(amountOfPairsMatched: Int) {
+        val dialogBuilder = activity?.let { AlertDialog.Builder(it) }
+        val dialogView = View.inflate(context, R.layout.end_game_dialog, null);
+        dialogBuilder?.setView(dialogView)
+        dialogBuilder?.setCancelable(false);
+
+        dialogBuilder?.setNegativeButton("QUIT") { _, _ ->
+            NavHostFragment.findNavController(this).navigate(R.id.backToMenuFragment)
+        }
+
+        dialogBuilder?.setPositiveButton("RESTART") { _, _ ->
+            startGame()
+        }
+
+        val alertDialog = dialogBuilder?.create()
+        alertDialog?.show()
+        val starTwo = alertDialog?.findViewById<ImageView>(R.id.ivStarTwo)
+        val starThree = alertDialog?.findViewById<ImageView>(R.id.ivStarThree)
+        showStars(starTwo, starThree)
+        val tvAmountPairsMatched: TextView? =
+            alertDialog?.findViewById<TextView>(R.id.tvTotalAmountMatched)
+        tvAmountPairsMatched?.text = amountOfPairsMatched.toString()
     }
 }

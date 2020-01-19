@@ -69,3 +69,5 @@ l
 ]app/src/main/java/com/example/memorygame/modules/home/model/datasource/HomeDataSourceLocal.kt,9/b/9b2d39f7b920ea1fdc6069b84d5e1308a3ff063b
 q
 Aapp/src/main/java/com/example/memorygame/data/local/ProductDao.kt,0/b/0b0803669912649873987cc5be630a1d5292b975
+{
+Kapp/src/main/java/com/example/memorygame/modules/options/OptionsFragment.kt,1/0/103dcf46ae8d86c4e0fd11ef4b3890dd50907d12
