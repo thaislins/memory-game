@@ -67,7 +67,7 @@
         app:layout_constraintTop_toBottomOf="@id/tvAmountSets" />
 
     <TextView
-        android:id="@+id/tvAmountMatches"
+        android:id="@+id/tvAmountEqualCards"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/mediumMargin"
@@ -82,10 +82,10 @@
         app:layout_constraintTop_toBottomOf="@id/spinnerSets" />
 
     <Spinner
-        android:id="@+id/spinnerMatches"
+        android:id="@+id/spinnerEqualCards"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_margin="@dimen/mediumMargin"
-        app:layout_constraintTop_toBottomOf="@id/tvAmountMatches" />
+        app:layout_constraintTop_toBottomOf="@id/tvAmountEqualCards" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

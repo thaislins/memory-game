@@ -5,7 +5,7 @@
 
     <!-- Resources -->
     <string name="preferences_amount_sets">preferences-amount-sets</string>
-    <string name="preferences_amount_matches">preferences-amount-matches</string>
+    <string name="preferences_amount_equal_cards">preferences-amount-equal-cards</string>
 
     <!-- Home Fragment -->
     <string name="home_fragment_play">Play</string>

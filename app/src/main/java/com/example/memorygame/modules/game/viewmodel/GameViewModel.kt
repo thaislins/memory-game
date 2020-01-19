@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.memorygame.exceptions.CardAlreadySelectedException
 import com.example.memorygame.modules.game.model.Card
+import com.example.memorygame.modules.game.model.Game
 import com.example.memorygame.modules.game.model.repository.GameRepository
 import com.example.memorygame.modules.home.model.Image
 import com.example.memorygame.modules.home.model.Product
@@ -12,11 +13,9 @@ import org.koin.core.KoinComponent
 import org.koin.core.inject
 import java.util.*
 
-
 class GameViewModel : ViewModel(), KoinComponent {
 
     private val repository: GameRepository by inject()
-    val amountOfSets = 2
     val cardsFaceUp = MutableLiveData<HashMap<Int, Card>>().apply { value = hashMapOf() }
     var amountOfMoves = MutableLiveData<Int>().apply { value = 0 }
     val updateLayout = MutableLiveData<Boolean>().apply { value = false }
@@ -38,21 +37,11 @@ class GameViewModel : ViewModel(), KoinComponent {
      * Create card layout and shuffle them
      *
      */
-    fun createCards(amountOfPairs: Int, products: List<Product>?) {
+    fun createCards(amountOfPairs: Int, amountEqualCards: Int, products: List<Product>?) {
         initializeValues()
         var images = getImageList(products)
         images = images.shuffled().take(amountOfPairs)
-        cards.value = repository.showCards(amountOfPairs, images)
-    }
-
-    /**
-     * Shuffles cards when button is clicked
-     *
-     */
-    fun shuffleCards() {
-        val newCards = cards.value!!
-        newCards.shuffle()
-        cards.value = newCards
+        cards.value = repository.showCards(amountOfPairs, amountEqualCards, images)
     }
 
     fun chooseCard(position: Int) {
@@ -64,13 +53,13 @@ class GameViewModel : ViewModel(), KoinComponent {
             if (it[position].isMatched) { // Makes sure a matched card cannot be selected
                 throw CardAlreadySelectedException()
             } else {
-                //amountOfMoves.value = amountOfMoves.value?.plus(1)
-                if (cardsFaceUp.value?.size!! >= 0 && cardsFaceUp.value!!.size < amountOfSets) {
+                amountOfMoves.value = amountOfMoves.value?.plus(1)
+                if (cardsFaceUp.value?.size!! >= 0 && cardsFaceUp.value!!.size < Game.amountEqualCards) {
                     it[position].isFaceUp = true
                     cardsFaceUp.value?.put(position, it[position])
                     updateLayout.value = true
 
-                    if (cardsFaceUp.value?.size == amountOfSets) {
+                    if (cardsFaceUp.value?.size == Game.amountEqualCards) {
                         Handler().postDelayed({
                             updateLayout.value = false
                             checkIfCardsMatch()
@@ -95,7 +84,6 @@ class GameViewModel : ViewModel(), KoinComponent {
             for ((key, value) in cardsFaceUp.value!!) {
                 if (cardsMatch) {
                     it[key].isMatched = true
-                    matchedCardCount.value = matchedCardCount.value?.plus(1)
                 } else {
                     it[key].isFaceUp = false
                 }
@@ -103,6 +91,7 @@ class GameViewModel : ViewModel(), KoinComponent {
 
         }
 
+        if (cardsMatch) matchedCardCount.value = matchedCardCount.value?.plus(1)
         cardsFaceUp.value?.clear()
         updateLayout.value = true
     }

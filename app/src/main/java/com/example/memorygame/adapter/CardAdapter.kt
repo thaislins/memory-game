@@ -20,19 +20,20 @@ class CardAdapter(
     var changedPositions = setOf<Int>()
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-        var convView = convertView
+        val convView : View
 
         if (convertView == null) {
             convView = LayoutInflater.from(context).inflate(resource, null)
             holder = CardHolder()
             holder.cardImagePhotoPath = convView?.findViewById(R.id.ivCardGame)
-            convView!!.tag = holder
+            convView.tag = holder
         } else {
             holder = convertView.tag as CardHolder
+            convView = convertView
         }
 
         checksCard(position)
-        return convView!!
+        return convView
     }
 
     private fun checksCard(position: Int) {

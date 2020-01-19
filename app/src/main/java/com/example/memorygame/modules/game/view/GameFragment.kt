@@ -52,25 +52,33 @@ class GameFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (activity as AppCompatActivity).supportActionBar!!.hide()
-        products =
-            arguments?.getParcelableArrayList(resources.getString(R.string.game_fragment_key_product_list))
+        products = arguments?.getParcelableArrayList(resources.getString(R.string.game_fragment_key_product_list))
         observeMatchedCardCount()
         startGame()
         setClickListener()
     }
 
     private fun startGame() {
-        setAmountOfPairs()
-        binding.viewModel?.createCards(Game.amountOfPairs, products)
+        setGameAttributes()
+        binding.viewModel?.createCards(Game.amountOfSets, Game.amountEqualCards, products)
         gameViewModel?.cards?.observe(viewLifecycleOwner, Observer {
             Handler().postDelayed({ startChronometer() }, 1200)
         })
     }
 
-    fun setAmountOfPairs() {
-        Game.amountOfPairs = PreferenceManager.getDefaultSharedPreferences(context).getInt(
-            resources.getString(R.string.app_preferences_amount_pairs),
+    /**
+     * Sets value of Game object attributes
+     *
+     */
+    private fun setGameAttributes() {
+        Game.amountOfSets = PreferenceManager.getDefaultSharedPreferences(context).getInt(
+            resources.getString(R.string.preferences_amount_sets),
             10
+        );
+
+        Game.amountEqualCards = PreferenceManager.getDefaultSharedPreferences(context).getInt(
+            resources.getString(R.string.preferences_amount_equal_cards),
+            2
         );
     }
 
@@ -99,9 +107,9 @@ class GameFragment : Fragment() {
      */
     private fun observeMatchedCardCount() {
         gameViewModel?.matchedCardCount?.observe(viewLifecycleOwner, Observer {
-            if (it != 0 && it == cards.size) {
+            if (it != 0 && it == cards.size / Game.amountEqualCards) {
                 chronometer.stop()
-                showEndGameDialog(it / 2)
+                showEndGameDialog(it)
             }
         })
     }
@@ -117,7 +125,7 @@ class GameFragment : Fragment() {
             starCounter++
         }
 
-        if (Game.amountOfMoves <= (Game.amountOfPairs * 6)) {
+        if (Game.amountOfMoves <= (Game.amountOfSets * 6)) {
             starCounter++
         }
 

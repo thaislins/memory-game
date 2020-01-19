@@ -17,8 +17,8 @@ import kotlinx.android.synthetic.main.fragment_options.*
 
 class OptionsFragment : Fragment() {
 
-    private val amountSets = arrayOf("10", "14", "18")
-    private val amountMatches = arrayOf("2", "3", "4")
+    private val amountSets = arrayOf("10", "11", "12")
+    private val amountEqualCards = arrayOf("2", "3", "4")
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,7 +33,7 @@ class OptionsFragment : Fragment() {
         pressBackButton()
         (activity as AppCompatActivity).supportActionBar!!.hide()
         setSpinner(spinnerSets, R.string.preferences_amount_sets, amountSets, 10)
-        setSpinner(spinnerMatches, R.string.preferences_amount_matches, amountMatches, 2)
+        setSpinner(spinnerEqualCards, R.string.preferences_amount_equal_cards, amountEqualCards, 2)
     }
 
     /**

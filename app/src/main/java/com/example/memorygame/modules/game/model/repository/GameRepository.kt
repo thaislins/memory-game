@@ -7,7 +7,11 @@ import com.example.memorygame.modules.home.model.Image
 
 class GameRepository(private val remoteDataSource: GameDataSourceImp) : GameDataSource {
 
-    override fun showCards(amountOfPairs: Int, images: List<Image>): MutableList<Card> {
-        return remoteDataSource.showCards(amountOfPairs, images)
+    override fun showCards(
+        amountOfSets: Int,
+        amountEqualCards: Int,
+        images: List<Image>
+    ): MutableList<Card> {
+        return remoteDataSource.showCards(amountOfSets, amountEqualCards, images)
     }
 }
