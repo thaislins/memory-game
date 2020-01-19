@@ -2,7 +2,10 @@
 
     <!-- App -->
     <string name="app_name">Memory Game</string>
-    <string name="app_preferences_amount_pairs">Memory Game</string>
+
+    <!-- Resources -->
+    <string name="preferences_amount_sets">preferences-amount-sets</string>
+    <string name="preferences_amount_matches">preferences-amount-matches</string>
 
     <!-- Home Fragment -->
     <string name="home_fragment_play">Play</string>
@@ -25,5 +28,6 @@
 
     <!-- Options Fragment -->
     <string name="options_fragment">Options</string>
-    <string name="options_fragment_amount_pairs">Amount of pairs to match</string>
+    <string name="options_fragment_amount_pairs">Amount of sets to match</string>
+    <string name="options_fragment_amount_matches">Amount of the same cards</string>
 </resources>

@@ -45,7 +45,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
-        android:id="@+id/tvAmountPairs"
+        android:id="@+id/tvAmountSets"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/mediumMargin"
@@ -60,10 +60,32 @@
         app:layout_constraintTop_toBottomOf="@id/customActionbar" />
 
     <Spinner
-        android:id="@+id/spinner"
+        android:id="@+id/spinnerSets"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_margin="@dimen/mediumMargin"
-        app:layout_constraintTop_toBottomOf="@id/tvAmountPairs" />
+        app:layout_constraintTop_toBottomOf="@id/tvAmountSets" />
+
+    <TextView
+        android:id="@+id/tvAmountMatches"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/mediumMargin"
+        android:layout_marginLeft="@dimen/mediumMargin"
+        android:layout_marginTop="@dimen/largeMargin"
+        android:layout_marginEnd="@dimen/mediumMargin"
+        android:layout_marginRight="@dimen/mediumMargin"
+        android:text="@string/options_fragment_amount_matches"
+        android:textColor="@color/colorPrimary"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/spinnerSets" />
+
+    <Spinner
+        android:id="@+id/spinnerMatches"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="@dimen/mediumMargin"
+        app:layout_constraintTop_toBottomOf="@id/tvAmountMatches" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
