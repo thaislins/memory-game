@@ -46,7 +46,6 @@ class GameFragment : Fragment() {
         binding.lifecycleOwner = this
         val adapter = CardAdapter(activity?.applicationContext!!, R.layout.item_card, cards)
         binding.gridView.adapter = adapter
-
         return binding.root
     }
 
