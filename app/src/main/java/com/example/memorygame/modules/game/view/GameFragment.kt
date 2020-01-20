@@ -88,7 +88,7 @@ class GameFragment : Fragment() {
      *
      */
     private fun startChronometer() {
-        chronometer.setBase(SystemClock.elapsedRealtime());
+        chronometer.base = SystemClock.elapsedRealtime();
         chronometer.start()
     }
 
@@ -108,6 +108,7 @@ class GameFragment : Fragment() {
      */
     private fun observeMatchedCardCount() {
         gameViewModel?.matchedCardCount?.observe(viewLifecycleOwner, Observer {
+            gameViewModel!!.addToScore(SystemClock.elapsedRealtime() - chronometer.getBase())
             if (it != 0 && it == cards.size / Game.amountEqualCards) {
                 chronometer.stop()
                 showEndGameDialog(it)
@@ -122,11 +123,11 @@ class GameFragment : Fragment() {
     private fun showStars(starTwo: ImageView?, starThree: ImageView?) {
         var starCounter = 0
 
-        if (SystemClock.elapsedRealtime() - chronometer.getBase() <= 35000) {
+        if (SystemClock.elapsedRealtime() - chronometer.getBase() <= 25000 * Game.amountEqualCards) {
             starCounter++
         }
 
-        if (Game.amountOfMoves <= (Game.amountOfSets * 5)) {
+        if (SystemClock.elapsedRealtime() - chronometer.getBase() <= 15000 * Game.amountEqualCards) {
             starCounter++
         }
 

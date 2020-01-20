@@ -17,9 +17,9 @@ class GameViewModel : ViewModel(), KoinComponent {
 
     private val repository: GameRepository by inject()
     val cardsFaceUp = MutableLiveData<HashMap<Int, Card>>().apply { value = hashMapOf() }
-    var amountOfMoves = MutableLiveData<Int>().apply { value = 0 }
+    val score = MutableLiveData<Int>().apply { value = 0 }
     val updateLayout = MutableLiveData<Boolean>().apply { value = false }
-    var matchedCardCount = MutableLiveData<Int>().apply { value = 0 }
+    val matchedCardCount = MutableLiveData<Int>().apply { value = 0 }
     val cards = MutableLiveData<MutableList<Card>>().apply { value = mutableListOf() }
 
     private fun getImageList(products: List<Product>?): List<Image> {
@@ -29,7 +29,7 @@ class GameViewModel : ViewModel(), KoinComponent {
     private fun initializeValues() {
         Card.identifierFactory = 0
         matchedCardCount.value = 0
-        amountOfMoves.value = 0
+        score.value = 0
         cards.value?.clear()
     }
 
@@ -44,6 +44,27 @@ class GameViewModel : ViewModel(), KoinComponent {
         cards.value = repository.showCards(amountOfPairs, amountEqualCards, images)
     }
 
+    /**
+     * Increments score according to how much time has elapsed in the game
+     *
+     */
+    fun addToScore(elapsedTime: Long) {
+        if (matchedCardCount.value == 0) {
+            score.value = 0
+        } else {
+            val timeMargin1 = 10000 * Game.amountEqualCards
+            val timeMargin2 = 15000 * Game.amountEqualCards
+            val timeMargin3 = 25000 * Game.amountEqualCards
+
+            if (elapsedTime <= timeMargin1) score.value = score.value?.plus(50)
+            else if (elapsedTime > timeMargin1 && elapsedTime <= timeMargin2) score.value =
+                score.value?.plus(30)
+            else if (elapsedTime > timeMargin2 && elapsedTime <= timeMargin3) score.value =
+                score.value?.plus(20)
+            else score.value = score.value?.plus(10)
+        }
+    }
+
     fun chooseCard(position: Int) {
         if (cardsFaceUp.value?.containsKey(position)!!) { // Makes sure you cannot select the same card twice and when two cards are clicked a third can't be clicked
             throw CardAlreadySelectedException()
@@ -53,7 +74,6 @@ class GameViewModel : ViewModel(), KoinComponent {
             if (it[position].isMatched) { // Makes sure a matched card cannot be selected
                 throw CardAlreadySelectedException()
             } else {
-                amountOfMoves.value = amountOfMoves.value?.plus(1)
                 if (cardsFaceUp.value?.size!! >= 0 && cardsFaceUp.value!!.size < Game.amountEqualCards) {
                     it[position].isFaceUp = true
                     cardsFaceUp.value?.put(position, it[position])
@@ -70,6 +90,10 @@ class GameViewModel : ViewModel(), KoinComponent {
         }
     }
 
+    /**
+     * Checks all values in cardsFaceUp map to see if they match
+     *
+     */
     private fun checkIfCardsMatch() {
         val entry = cardsFaceUp.value?.entries?.iterator()?.next()
         var cardsMatch = true
