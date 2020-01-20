@@ -2,6 +2,8 @@
 
 🃏:iphone: A memory game made for Android using the Shopify Store Products API
 
+<p align="center"> <img width="30%" src="https://github.com/thaislins/memory-game/blob/app_images/images/memorygame.gif"> </p>
+
 ## Description
 
   A card game in which all of the cards are mixed up, laid face dows and are flipped face up over each turn. The goal of this game is to turn over pairs of matching cards. After all cards are matched the game will be over and the user can choose to play again or quit the game. This application was made with an MVVM Architecture, using Kotlin coroutines to allow API Requests to [Shopify Store Products API](https://shopicruit.myshopify.com/admin/products.json?page=1&access_token=c32313df0d0ef512ca64d5b336a0d7c6) to get product Images and display them on the game cards.
@@ -35,6 +37,12 @@ and the amount of equal cards that have to be matched
   and more efficient
 * [Jackson](https://github.com/FasterXML/jackson-core) - JSON Parser
   * This parser was used to parse the shopify products's JSON into object
+  
+### Screenshots
+
+| No Matches | Some Matches | Win Game |
+| ---------- | ------------ | -------- |
+| <p align="center"> <img src="https://github.com/thaislins/memory-game/blob/app_images/images/start.png" width="80%"> </p> |<p align="center"> <img src="https://github.com/thaislins/memory-game/blob/app_images/images/matches.png" width="80%"> </p> |<p align="center"> <img src="https://github.com/thaislins/memory-game/blob/app_images/images/end.png" width="80%"> </p> |
 
 ## Author
 
