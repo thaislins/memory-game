@@ -36,6 +36,7 @@ class HomeFragment : Fragment() {
         homeViewModel.loadProducts()
         goToGameFragment()
         goToOptionsFragment()
+        goToScoreFragment()
         observeProductList()
         createErrorDialog()
     }
@@ -76,6 +77,12 @@ class HomeFragment : Fragment() {
     private fun goToOptionsFragment() {
         btnOptions.setOnClickListener {
             view?.findNavController()?.navigate(R.id.toOptionsFragment)
+        }
+    }
+
+    private fun goToScoreFragment() {
+        btnScores.setOnClickListener {
+            view?.findNavController()?.navigate(R.id.toScoreFragment)
         }
     }
 

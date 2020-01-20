@@ -5,7 +5,7 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/splashScreenFragment">
     <fragment
-        android:id="@+id/menuFragment"
+        android:id="@+id/homeFragment"
         android:name="com.example.memorygame.modules.home.view.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home">
@@ -19,6 +19,9 @@
         <action
             android:id="@+id/toOptionsFragment"
             app:destination="@id/optionsFragment" />
+        <action
+            android:id="@+id/toScoreFragment"
+            app:destination="@id/scoreFragment" />
     </fragment>
     <fragment
         android:id="@+id/gameFragment"
@@ -27,7 +30,7 @@
         tools:layout="@layout/fragment_game">
         <action
             android:id="@+id/backToMenuFragment"
-            app:destination="@id/menuFragment"
+            app:destination="@id/homeFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
@@ -42,7 +45,7 @@
         tools:layout="@layout/fragment_splash_screen">
         <action
             android:id="@+id/toMenuFragment"
-            app:destination="@id/menuFragment"
+            app:destination="@id/homeFragment"
             app:popUpTo="@+id/nav_graph"
             app:popUpToInclusive="true" />
     </fragment>
@@ -51,4 +54,9 @@
         android:name="com.example.memorygame.modules.options.OptionsFragment"
         android:label="fragment_options"
         tools:layout="@layout/fragment_options" />
+    <fragment
+        android:id="@+id/scoreFragment"
+        android:name="com.example.memorygame.modules.score.view.ScoreFragment"
+        android:label="fragment_score"
+        tools:layout="@layout/fragment_score" />
 </navigation>
