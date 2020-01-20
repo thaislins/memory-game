@@ -3,12 +3,16 @@ package com.example.memorygame.modules.game.viewmodel
 import android.os.Handler
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.memorygame.exceptions.CardAlreadySelectedException
 import com.example.memorygame.modules.game.model.Card
 import com.example.memorygame.modules.game.model.Game
 import com.example.memorygame.modules.game.model.repository.GameRepository
 import com.example.memorygame.modules.home.model.Image
 import com.example.memorygame.modules.home.model.Product
+import com.example.memorygame.modules.score.model.Score
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 import java.util.*
@@ -62,6 +66,7 @@ class GameViewModel : ViewModel(), KoinComponent {
             else if (elapsedTime > timeMargin2 && elapsedTime <= timeMargin3) score.value =
                 score.value?.plus(20)
             else score.value = score.value?.plus(10)
+            Game.score = score.value!!
         }
     }
 
@@ -118,5 +123,11 @@ class GameViewModel : ViewModel(), KoinComponent {
         if (cardsMatch) matchedCardCount.value = matchedCardCount.value?.plus(1)
         cardsFaceUp.value?.clear()
         updateLayout.value = true
+    }
+
+    fun saveScore() {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.saveScore(Score(Game.playerName, score.value!!))
+        }
     }
 }

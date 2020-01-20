@@ -1,9 +1,11 @@
 package com.example.memorygame.modules.game.model.datasource
 
+import com.example.memorygame.data.local.ScoreDao
 import com.example.memorygame.modules.game.model.Card
 import com.example.memorygame.modules.home.model.Image
+import com.example.memorygame.modules.score.model.Score
 
-class GameDataSourceImp : GameDataSource {
+class GameDataSourceImp(private val scoreDao: ScoreDao) : GameDataSource {
 
     override fun showCards(
         amountOfSets: Int,
@@ -14,7 +16,7 @@ class GameDataSourceImp : GameDataSource {
 
         for (i in 1..amountOfSets) {
             val card = Card()
-            card.image = images[i-1]
+            card.image = images[i - 1]
             cards.add(card)
 
             for (j in 1 until amountEqualCards) {
@@ -24,5 +26,9 @@ class GameDataSourceImp : GameDataSource {
         }
 
         return cards.shuffled() as MutableList<Card>
+    }
+
+    override suspend fun saveScore(score: Score) {
+        scoreDao.insertScore(score)
     }
 }

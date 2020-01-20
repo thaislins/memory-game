@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
@@ -54,12 +55,12 @@ class GameFragment : Fragment() {
         (activity as AppCompatActivity).supportActionBar!!.hide()
         products =
             arguments?.getParcelableArrayList(resources.getString(R.string.game_fragment_key_product_list))
-        observeMatchedCardCount()
-        startGame()
-        setClickListener()
+        showNameDialog()
     }
 
     private fun startGame() {
+        observeMatchedCardCount()
+        setClickListener()
         setGameAttributes()
         binding.viewModel?.createCards(Game.amountOfSets, Game.amountEqualCards, products)
         gameViewModel?.cards?.observe(viewLifecycleOwner, Observer {
@@ -111,9 +112,49 @@ class GameFragment : Fragment() {
             gameViewModel!!.addToScore(SystemClock.elapsedRealtime() - chronometer.getBase())
             if (it != 0 && it == cards.size / Game.amountEqualCards) {
                 chronometer.stop()
-                showEndGameDialog(it)
+                showEndGameDialog()
             }
         })
+    }
+
+    /**
+     * Shows dialog that requests player's name on game start
+     *
+     */
+    private fun showNameDialog() {
+        val builder = AlertDialog.Builder(context!!).setTitle("Enter Player Name")
+
+        val viewInflated: View = LayoutInflater.from(context)
+            .inflate(R.layout.dialog_player_name, view as ViewGroup?, false)
+        val input = viewInflated.findViewById<View>(R.id.input) as EditText
+        builder.setView(viewInflated)
+
+        builder.setPositiveButton(android.R.string.ok) { dialog, which ->
+            dialog.dismiss()
+            Game.playerName = input.text.toString()
+            startGame()
+        }
+
+        builder.show()
+    }
+
+    /**
+     * Set a click listener for the cards
+     *
+     */
+    private fun setClickListener() {
+        binding.gridView.onItemClickListener =
+            AdapterView.OnItemClickListener { _, _, position, _ ->
+                // Get the GridView selected/clicked item text
+                try {
+                    binding.viewModel?.chooseCard(position)
+                    val adapter = binding.gridView.adapter as CardAdapter
+                    adapter.changedPositions = setOf(position)
+                    updateGameLayout(adapter)
+                } catch (e: CardAlreadySelectedException) {
+                    // Do not do anything when re-selecting an already selected card
+                }
+            }
     }
 
     /**
@@ -144,31 +185,12 @@ class GameFragment : Fragment() {
     }
 
     /**
-     * Set a click listener for the cards
-     *
-     */
-    private fun setClickListener() {
-        binding.gridView.onItemClickListener =
-            AdapterView.OnItemClickListener { _, _, position, _ ->
-                // Get the GridView selected/clicked item text
-                try {
-                    binding.viewModel?.chooseCard(position)
-                    val adapter = binding.gridView.adapter as CardAdapter
-                    adapter.changedPositions = setOf(position)
-                    updateGameLayout(adapter)
-                } catch (e: CardAlreadySelectedException) {
-                    // Do not do anything when re-selecting an already selected card
-                }
-            }
-    }
-
-    /**
      * Shows dialog at end of game that gives quit or restart option
      *
      */
-    private fun showEndGameDialog(amountOfPairsMatched: Int) {
+    private fun showEndGameDialog() {
         val dialogBuilder = activity?.let { AlertDialog.Builder(it) }
-        val dialogView = View.inflate(context, R.layout.end_game_dialog, null);
+        val dialogView = View.inflate(context, R.layout.dialog_end_game, null);
         dialogBuilder?.setView(dialogView)
         dialogBuilder?.setCancelable(false);
 
@@ -185,8 +207,8 @@ class GameFragment : Fragment() {
         val starTwo = alertDialog?.findViewById<ImageView>(R.id.ivStarTwo)
         val starThree = alertDialog?.findViewById<ImageView>(R.id.ivStarThree)
         showStars(starTwo, starThree)
-        val tvAmountPairsMatched: TextView? =
-            alertDialog?.findViewById<TextView>(R.id.tvTotalAmountMatched)
-        tvAmountPairsMatched?.text = amountOfPairsMatched.toString()
+        val tvScore: TextView? = alertDialog?.findViewById(R.id.tvScore)
+        tvScore?.text = gameViewModel?.score?.value.toString()
+        gameViewModel?.saveScore()
     }
 }

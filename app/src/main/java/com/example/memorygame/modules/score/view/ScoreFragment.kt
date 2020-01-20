@@ -7,9 +7,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.example.memorygame.R
+import com.example.memorygame.modules.score.viewmodel.ScoreViewModel
 import kotlinx.android.synthetic.main.fragment_options.*
+import org.koin.android.ext.android.inject
 
 class ScoreFragment : Fragment() {
+
+    private val scoreViewModel: ScoreViewModel by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -22,6 +26,7 @@ class ScoreFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         pressBackButton()
+        scoreViewModel.loadScoreList()
     }
 
     fun pressBackButton() {

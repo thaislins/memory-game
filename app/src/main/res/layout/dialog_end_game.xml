@@ -27,11 +27,11 @@
             android:textSize="@dimen/largeTextSize" />
 
         <TextView
-            android:id="@+id/tvTotalAmountMatched"
+            android:id="@+id/tvScore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_trophy"
             android:drawablePadding="@dimen/smallMargin"
-            android:drawableLeft="@drawable/ic_trophy"
             android:fontFamily="@font/carter_one"
             android:textAllCaps="true"
             android:textColor="#ffffff" />
@@ -51,8 +51,8 @@
             layout="@layout/stars"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/smallMargin"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="@dimen/smallMargin" />
 
     </LinearLayout>
 
