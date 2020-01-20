@@ -52,7 +52,8 @@ class GameFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (activity as AppCompatActivity).supportActionBar!!.hide()
-        products = arguments?.getParcelableArrayList(resources.getString(R.string.game_fragment_key_product_list))
+        products =
+            arguments?.getParcelableArrayList(resources.getString(R.string.game_fragment_key_product_list))
         observeMatchedCardCount()
         startGame()
         setClickListener()
@@ -115,45 +116,34 @@ class GameFragment : Fragment() {
     }
 
     /**
-     * Shows amount of starts player obtained in game
+     * Defines amount of stars player obtained in game
      *
      */
     private fun showStars(starTwo: ImageView?, starThree: ImageView?) {
         var starCounter = 0
 
-        if (SystemClock.elapsedRealtime() - chronometer.getBase() <= 150000) {
+        if (SystemClock.elapsedRealtime() - chronometer.getBase() <= 35000) {
             starCounter++
         }
 
-        if (Game.amountOfMoves <= (Game.amountOfSets * 6)) {
+        if (Game.amountOfMoves <= (Game.amountOfSets * 5)) {
             starCounter++
         }
 
         if (starCounter == 1) {
-            starTwo?.setImageDrawable(
-                ContextCompat.getDrawable(
-                    activity?.applicationContext!!,
-                    R.drawable.ic_star_red
-                )
-            )
+            setStarDrawable(starTwo, R.drawable.ic_star_red)
         } else if (starCounter == 2) {
-            starTwo?.setImageDrawable(
-                ContextCompat.getDrawable(
-                    activity?.applicationContext!!,
-                    R.drawable.ic_star_red
-                )
-            )
-            starThree?.setImageDrawable(
-                ContextCompat.getDrawable(
-                    activity?.applicationContext!!,
-                    R.drawable.ic_star_red
-                )
-            )
+            setStarDrawable(starTwo, R.drawable.ic_star_red)
+            setStarDrawable(starThree, R.drawable.ic_star_red)
         }
     }
 
+    private fun setStarDrawable(star: ImageView?, drawable: Int) {
+        star?.setImageDrawable(ContextCompat.getDrawable(activity?.applicationContext!!, drawable))
+    }
+
     /**
-     * Set a click listener for the cards and shuffle button
+     * Set a click listener for the cards
      *
      */
     private fun setClickListener() {
