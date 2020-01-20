@@ -1,4 +1,4 @@
-package com.example.memorygame.adapter
+package com.example.memorygame.modules.game.view.adapter
 
 import android.animation.AnimatorInflater
 import android.content.Context
@@ -14,13 +14,13 @@ import com.example.memorygame.modules.game.model.Card
 
 class CardAdapter(
     context: Context, private val resource: Int, private var cardList: MutableList<Card>?
-) : ArrayAdapter<CardAdapter.CardHolder>(context, resource), AdapterItemsContract {
+) : ArrayAdapter<CardAdapter.CardHolder>(context, resource), AdapterCardsContract {
 
     private lateinit var holder: CardHolder
     var changedPositions = setOf<Int>()
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-        val convView : View
+        val convView: View
 
         if (convertView == null) {
             convView = LayoutInflater.from(context).inflate(resource, null)
@@ -79,7 +79,7 @@ class CardAdapter(
         flip.start()
     }
 
-    override fun replaceItems(list: MutableList<Card>) {
+    override fun setCardList(list: MutableList<Card>) {
         cardList?.clear()
         cardList?.addAll(list)
         notifyDataSetChanged()

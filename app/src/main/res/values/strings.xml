@@ -32,4 +32,5 @@
 
     <!-- Score Fragment -->
     <string name="score_fragment">Scores</string>
+    <string name="score_fragment_no_scores">No scores available to display</string>
 </resources>

@@ -4,14 +4,9 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-class Score {
+class Score() {
     @PrimaryKey(autoGenerate = true)
-    var id: Long = 0
-    var name: String = ""
-    var score: Int = 0
-
-    constructor(name: String, score: Int) {
-        this.name = name
-        this.score = score
-    }
+    var id: Long? = 0
+    var playerName: String? = ""
+    var value: Int? = 0
 }

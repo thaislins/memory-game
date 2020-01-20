@@ -19,11 +19,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import com.example.memorygame.R
-import com.example.memorygame.adapter.CardAdapter
 import com.example.memorygame.databinding.FragmentGameBinding
 import com.example.memorygame.exceptions.CardAlreadySelectedException
 import com.example.memorygame.modules.game.model.Card
 import com.example.memorygame.modules.game.model.Game
+import com.example.memorygame.modules.game.view.adapter.CardAdapter
 import com.example.memorygame.modules.game.viewmodel.GameViewModel
 import com.example.memorygame.modules.home.model.Product
 import kotlinx.android.synthetic.main.fragment_game.*
@@ -164,11 +164,11 @@ class GameFragment : Fragment() {
     private fun showStars(starTwo: ImageView?, starThree: ImageView?) {
         var starCounter = 0
 
-        if (SystemClock.elapsedRealtime() - chronometer.getBase() <= 25000 * Game.amountEqualCards) {
+        if (SystemClock.elapsedRealtime() - chronometer.getBase() <= 35000 * Game.amountEqualCards) {
             starCounter++
         }
 
-        if (SystemClock.elapsedRealtime() - chronometer.getBase() <= 15000 * Game.amountEqualCards) {
+        if (SystemClock.elapsedRealtime() - chronometer.getBase() <= 25000 * Game.amountEqualCards) {
             starCounter++
         }
 

@@ -127,7 +127,10 @@ class GameViewModel : ViewModel(), KoinComponent {
 
     fun saveScore() {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.saveScore(Score(Game.playerName, score.value!!))
+            val endScore = Score()
+            endScore.playerName = Game.playerName
+            endScore.value = score.value!!
+            repository.saveScore(endScore)
         }
     }
 }

@@ -7,7 +7,7 @@ import com.example.memorygame.data.local.ScoreDao
 import com.example.memorygame.modules.home.model.Product
 import com.example.memorygame.modules.score.model.Score
 
-@Database(entities = [Product::class, Score::class], version = 1)
+@Database(entities = [Product::class, Score::class], version = 2)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun productDao(): ProductDao
