@@ -1,6 +1,6 @@
 # Memory Game
 
-♠️♦️ A memory game made for Android using the Shopify Store Products API
+🃏:iphone: A memory game made for Android using the Shopify Store Products API
 
 ## Description
 
