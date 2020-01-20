@@ -20,6 +20,7 @@ import java.util.*
 class GameViewModel : ViewModel(), KoinComponent {
 
     private val repository: GameRepository by inject()
+    var gameOver = MutableLiveData<Boolean>().apply { value = false }
     val cardsFaceUp = MutableLiveData<HashMap<Int, Card>>().apply { value = hashMapOf() }
     val score = MutableLiveData<Int>().apply { value = 0 }
     val updateLayout = MutableLiveData<Boolean>().apply { value = false }
@@ -33,6 +34,7 @@ class GameViewModel : ViewModel(), KoinComponent {
     private fun initializeValues() {
         Card.identifierFactory = 0
         matchedCardCount.value = 0
+        gameOver.value = false
         score.value = 0
         cards.value?.clear()
     }
@@ -66,7 +68,6 @@ class GameViewModel : ViewModel(), KoinComponent {
             else if (elapsedTime > timeMargin2 && elapsedTime <= timeMargin3) score.value =
                 score.value?.plus(20)
             else score.value = score.value?.plus(10)
-            Game.score = score.value!!
         }
     }
 
@@ -121,16 +122,27 @@ class GameViewModel : ViewModel(), KoinComponent {
         }
 
         if (cardsMatch) matchedCardCount.value = matchedCardCount.value?.plus(1)
+        checkIfGameOver()
         cardsFaceUp.value?.clear()
         updateLayout.value = true
     }
 
+    fun checkIfGameOver() { // Checks if amount of matches
+        matchedCardCount.value.also {
+            if (it != 0 && it == (cards.value?.size?.div(Game.amountEqualCards))) {
+                gameOver.value = true
+            }
+        }
+    }
+
     fun saveScore() {
         viewModelScope.launch(Dispatchers.IO) {
-            val endScore = Score()
-            endScore.playerName = Game.playerName
-            endScore.value = score.value!!
-            repository.saveScore(endScore)
+            repository.saveScore(
+                Score(
+                    Game.playerName,
+                    score.value!!
+                )
+            )
         }
     }
 }

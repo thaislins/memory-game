@@ -14,12 +14,14 @@ import org.koin.core.inject
 class ScoreViewModel : ViewModel(), KoinComponent {
 
     private val repository: ScoreRepository by inject()
-    val scores = MutableLiveData<List<Score>>().apply { value = null }
+    val scores = MutableLiveData<MutableList<Score>>().apply { value = null }
 
     fun loadScoreList() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                scores.postValue(repository.loadAll())
+                var list = repository.loadAll()
+                list = list?.sortedBy { it.value }
+                scores.postValue(list?.reversed() as MutableList<Score>?)
             } catch (ex: Exception) {
                 Log.e("Error", ex.message)
             }

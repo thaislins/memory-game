@@ -32,6 +32,7 @@ import java.util.*
 class GameFragment : Fragment() {
 
     private var cards = mutableListOf<Card>()
+    private var numMatchedCards: Int? = null
     private var products: ArrayList<Product>? = null
     private lateinit var binding: FragmentGameBinding
     private val gameViewModel: GameViewModel? by lazy {
@@ -56,10 +57,37 @@ class GameFragment : Fragment() {
         products =
             arguments?.getParcelableArrayList(resources.getString(R.string.game_fragment_key_product_list))
         showNameDialog()
+        observeMatchedCardCount()
+        observeGameOver()
     }
 
+    /**
+     * Shows dialog that requests player's name on game start
+     *
+     */
+    private fun showNameDialog() {
+        val builder = AlertDialog.Builder(context!!).setTitle("Enter Player Name")
+
+        val viewInflated: View = LayoutInflater.from(context)
+            .inflate(R.layout.dialog_player_name, view as ViewGroup?, false)
+        val input = viewInflated.findViewById<View>(R.id.input) as EditText
+        builder.setView(viewInflated)
+
+        builder.setPositiveButton(android.R.string.ok) { dialog, which ->
+            dialog.dismiss()
+            Game.playerName = input.text.toString()
+            startGame()
+        }
+
+        builder.show()
+    }
+
+    /**
+     * Initializes game values
+     *
+     */
     private fun startGame() {
-        observeMatchedCardCount()
+        numMatchedCards = 0
         setClickListener()
         setGameAttributes()
         binding.viewModel?.createCards(Game.amountOfSets, Game.amountEqualCards, products)
@@ -104,39 +132,33 @@ class GameFragment : Fragment() {
     }
 
     /**
-     * Ends game in case all cards are matched
+     * Increments score value when cards are matched
      *
      */
     private fun observeMatchedCardCount() {
         gameViewModel?.matchedCardCount?.observe(viewLifecycleOwner, Observer {
-            gameViewModel!!.addToScore(SystemClock.elapsedRealtime() - chronometer.getBase())
-            if (it != 0 && it == cards.size / Game.amountEqualCards) {
+            if (it == numMatchedCards?.plus(1)) {
+                gameViewModel!!.addToScore(SystemClock.elapsedRealtime() - chronometer.getBase())
+                numMatchedCards = numMatchedCards?.plus(1)
+            }
+        }
+        )
+    }
+
+    /**
+     * Observes game over value and stops chronometer and shows end dialog in case game is over
+     *
+     */
+    private fun observeGameOver() {
+        gameViewModel?.gameOver?.observe(viewLifecycleOwner, Observer {
+            if (it) {
+                gameViewModel?.saveScore()
                 chronometer.stop()
                 showEndGameDialog()
             }
         })
     }
 
-    /**
-     * Shows dialog that requests player's name on game start
-     *
-     */
-    private fun showNameDialog() {
-        val builder = AlertDialog.Builder(context!!).setTitle("Enter Player Name")
-
-        val viewInflated: View = LayoutInflater.from(context)
-            .inflate(R.layout.dialog_player_name, view as ViewGroup?, false)
-        val input = viewInflated.findViewById<View>(R.id.input) as EditText
-        builder.setView(viewInflated)
-
-        builder.setPositiveButton(android.R.string.ok) { dialog, which ->
-            dialog.dismiss()
-            Game.playerName = input.text.toString()
-            startGame()
-        }
-
-        builder.show()
-    }
 
     /**
      * Set a click listener for the cards
@@ -195,11 +217,11 @@ class GameFragment : Fragment() {
         dialogBuilder?.setCancelable(false);
 
         dialogBuilder?.setNegativeButton("QUIT") { _, _ ->
-            NavHostFragment.findNavController(this).navigate(R.id.backToMenuFragment)
+            NavHostFragment.findNavController(this).navigateUp()
         }
 
         dialogBuilder?.setPositiveButton("RESTART") { _, _ ->
-            startGame()
+            showNameDialog()
         }
 
         val alertDialog = dialogBuilder?.create()
@@ -209,6 +231,5 @@ class GameFragment : Fragment() {
         showStars(starTwo, starThree)
         val tvScore: TextView? = alertDialog?.findViewById(R.id.tvScore)
         tvScore?.text = gameViewModel?.score?.value.toString()
-        gameViewModel?.saveScore()
     }
 }
